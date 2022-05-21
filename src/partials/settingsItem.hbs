@@ -1,0 +1,14 @@
+<div class="settings-item">
+  <span class="settings-item__title">
+    {{title}}
+  </span>
+  <input 
+    type="{{#if type}}{{type}}{{else}}text{{/if}}"
+    {{#if name}}name="{{name}}"{{/if}}
+    {{#if id}}id="{{id}}"{{/if}} 
+    class="settings-item__input" 
+    {{#if value}}value="{{value}}"{{/if}}
+    {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
+    {{#if readonly}}readonly{{/if}}
+  >
+</div>

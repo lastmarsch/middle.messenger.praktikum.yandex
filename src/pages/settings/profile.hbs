@@ -1,0 +1,23 @@
+---
+title: "Profile"
+css:
+- settings/settings.css
+- partials/settingsItem.css
+---
+
+{{!< settings/settingsTemplate }} 
+<div class="main-area__list">
+  {{> settingsItem title="First name" value=user.first_name readonly="true"}}
+  {{> settingsItem title="Second name" value=user.second_name readonly="true"}}
+  {{> settingsItem title="Display name" value=user.display_name readonly="true"}}
+  {{> settingsItem title="Login" value=user.login readonly="true"}}
+  {{> settingsItem title="Email" value=user.email readonly="true"}}
+  {{> settingsItem title="Phone" value=user.phone readonly="true"}}
+</div>
+<div class="main-area__links">
+  <a href="{{routes.pages.changeInfo.href}}">Change profile data</a>
+  <a href="{{routes.pages.changePassword.href}}">Change password</a>
+  <a href="{{routes.pages.signIn.href}}">Log out</a>
+</div>
+
+  

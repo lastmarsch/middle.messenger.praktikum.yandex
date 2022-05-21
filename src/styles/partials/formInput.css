@@ -15,6 +15,7 @@
   }
 
   &__input {
+    @mixin Ordinary-text;
     height: 35px;
     width: 100%;
     border: none;

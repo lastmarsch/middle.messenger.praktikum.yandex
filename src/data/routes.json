@@ -22,23 +22,23 @@
     },
     "chat": {
       "title": "Чат",
-      "href": "/src/pages/chat.hbs"
+      "href": "/src/pages/chat/chat.hbs"
     },
     "profile": {
       "title": "Профиль",
-      "href": "/src/pages/profile.hbs"
+      "href": "/src/pages/settings/profile.hbs"
     },
     "changeInfo": {
       "title": "Изменить данные профиля",
-      "href": "/src/pages/changeInfo.hbs"
+      "href": "/src/pages/settings/changeInfo.hbs"
     },
     "changePassword": {
       "title": "Изменить пароль",
-      "href": "/src/pages/changePassword.hbs"
+      "href": "/src/pages/settings/changePassword.hbs"
     },
     "changeAvatar": {
       "title": "Изменить аватар",
-      "href": "/src/pages/changeAvatar.hbs"
+      "href": "/src/pages/settings/changeAvatar.hbs"
     }
   }
 }

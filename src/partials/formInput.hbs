@@ -1,4 +1,14 @@
 <div class="input-group">
+  {{#if title}}
   <label for="{{id}}" class="input-group__label">{{title}}</label>
-  <input type="{{type}}" name="{{name}}" id="{{id}}" class="input-group__input">
+  {{/if}}
+  <input 
+    type="{{type}}" 
+    name="{{name}}" 
+    {{#if id}}id="{{id}}"{{/if}} 
+    class="input-group__input" 
+    {{#if value}}value="{{value}}"{{/if}}
+    {{#if placeholder}}placeholder="{{placeholder}}"{{/if}}
+    {{#if readonly}}readonly{{/if}}
+  >
 </div>

@@ -3,6 +3,7 @@ title: "Sign in"
 css:
 - auth/auth.css
 - partials/formInput.css
+- partials/formButton.css
 ---
 
 {{!< auth/authTemplate }} 
@@ -13,6 +14,6 @@ css:
 </form>
 
 <div class="container__form">
-  <input type="submit" form="signin" value="{{ this.title }}" class="container__button">
+  {{> formButton id="submit" form="signin" type="submit" class="container__button" value=this.title}}
   <a href="{{routes.pages.signUp.href}}" class="container__link">Sign up</a>
 </div>

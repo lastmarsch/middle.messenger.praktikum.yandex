@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../styles/chat/chat.css">
+  <link rel="stylesheet" href="../../styles/partials/formInput.css">
+  <title>Chat</title>
+</head>
+
+<body>
+  <div class="side-menu">
+    <div class="side-menu__panel">
+      {{> formInput id="search" name="search" type="text" placeholder="Search..."}}
+    </div>
+    <div class="side-menu__list">Chat list</div>
+  </div>
+  <div class="main">
+    <div class="main__panel"></div>
+    <div class="main__msgs">Convo</div>
+    <div class="main__edit-msg">
+      {{> formInput id="search" name="search" type="text" placeholder="Start typing..."}}
+      {{> formButton id="submit" type="button" class="edit-msg__button" value="Send message"}}
+    </div>
+  </div>
+</body>
+
+</html>
