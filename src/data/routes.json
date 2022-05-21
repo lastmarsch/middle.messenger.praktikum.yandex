@@ -1,0 +1,44 @@
+{
+  "pages": {
+    "home": {
+      "title": "Список страниц",
+      "href": "/"
+    },
+    "signIn": {
+      "title": "Авторизация",
+      "href": "/src/pages/signIn.hbs"
+    },
+    "signUp": {
+      "title": "Регистрация",
+      "href": "/src/pages/signUp.hbs"
+    },
+    "404": {
+      "title": "Страница 404",
+      "href": "/src/pages/error/404.hbs"
+    },
+    "500": {
+      "title": "Страница 500",
+      "href": "/src/pages/error/500.hbs"
+    },
+    "chat": {
+      "title": "Чат",
+      "href": "/src/pages/chat.hbs"
+    },
+    "profile": {
+      "title": "Профиль",
+      "href": "/src/pages/profile.hbs"
+    },
+    "changeInfo": {
+      "title": "Изменить данные профиля",
+      "href": "/src/pages/changeInfo.hbs"
+    },
+    "changePassword": {
+      "title": "Изменить пароль",
+      "href": "/src/pages/changePassword.hbs"
+    },
+    "changeAvatar": {
+      "title": "Изменить аватар",
+      "href": "/src/pages/changeAvatar.hbs"
+    }
+  }
+}

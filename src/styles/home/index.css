@@ -1,0 +1,36 @@
+@import '../main.css';
+
+
+body {
+  background-color: $light-blue;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.routes {
+  @mixin Bordered-window;
+
+  margin-top: 200px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 50px;
+
+  &__title {
+    @mixin Title-text;
+    color: $cool-dark;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__link {
+    @mixin Link-text;
+    color: $action-color;
+  }
+}
