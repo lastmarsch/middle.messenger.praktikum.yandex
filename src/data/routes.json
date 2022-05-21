@@ -6,11 +6,11 @@
     },
     "signIn": {
       "title": "Авторизация",
-      "href": "/src/pages/signIn.hbs"
+      "href": "/src/pages/auth/signIn.hbs"
     },
     "signUp": {
       "title": "Регистрация",
-      "href": "/src/pages/signUp.hbs"
+      "href": "/src/pages/auth/signUp.hbs"
     },
     "404": {
       "title": "Страница 404",

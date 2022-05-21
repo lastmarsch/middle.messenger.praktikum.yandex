@@ -1,0 +1,23 @@
+---
+title: "Sign up"
+css:
+- auth/auth.css
+- partials/formInput.css
+---
+
+{{!< auth/authTemplate }} 
+
+<form id="signup" action="" class="container__form">
+  {{> formInput id="first_name" name="first_name" title="First name" type="text"}}
+  {{> formInput id="second_name" name="second_name" title="Second name" type="text"}}
+  {{> formInput id="login" name="login" title="Username" type="text"}}
+  {{> formInput id="email" name="email" title="Email" type="text"}}
+  {{> formInput id="phone" name="phone" title="Phone" type="tel"}}
+  {{> formInput id="password" name="password" title="Password" type="password"}}
+  {{> formInput id="confirm_password" name="confirm_password" title="Confirm password" type="password"}}
+</form>
+
+<div class="container__form">
+  <input type="submit" form="signup" value="{{ this.title }}" class="container__button">
+  <a href="{{routes.pages.signIn.href}}" class="container__link">Sign in</a>
+</div>
