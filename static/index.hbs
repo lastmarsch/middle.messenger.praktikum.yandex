@@ -16,7 +16,9 @@
       Список страниц
     </span>
     {{#each routes.pages}}
+    {{#unless (eq this.href '/')}}
     <a class="routes__link" href="{{this.href}}">{{this.title}}</a>
+    {{/unless}}
     {{/each}}
   </div>
 </body>
