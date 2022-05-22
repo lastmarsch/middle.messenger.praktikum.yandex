@@ -15,4 +15,4 @@
 Макет приложения в Figma доступен по [ссылке](https://www.figma.com/file/eHfq7ZtG4fSTdFIG8UYS3x/Messenger?node-id=0:1).
 
 ## Пулл реквесты
-Спринт 1: #1
+Спринт 1: [#1](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/1)
