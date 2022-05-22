@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../styles/chat/chat.css">
   <link rel="stylesheet" href="../../styles/partials/formInput.css">
+  <link rel="stylesheet" href="../../styles/chat/chatListItem.css">
+  <link rel="stylesheet" href="../../styles/chat/message.css">
   <title>Chat</title>
 </head>
 
@@ -21,7 +23,18 @@
         <img src="{{imgRoutes.addUser}}">
       </a>
     </div>
-    <div class="side-menu__list">Chat list</div>
+
+    <div class="side-menu__list">
+      {{#each chats.list}}
+      {{> chat/chatListItem 
+        username=this.name 
+        lastMessage=this.messages.[3].text
+        lastOnline=this.lastOnline
+        unreadMessagesCount=this.unreadMessagesCount
+        opened=this.opened
+      }}
+      {{/each}}
+    </div>
   </div>
   <div class="main">
     <div class="main__panel">
@@ -30,15 +43,21 @@
           <img src="{{imgRoutes.avatar}}">
         </div>
         <div class="panel__user-info">
-          <span>Eminescu</span>
-          <span>Last online: 2h</span>
+          <span>{{chats.list.[1].name}}</span>
+          <span>Last online: {{chats.list.[1].lastOnline}}</span>
         </div>
       </div>
       <a href="#">
         <img src="{{imgRoutes.more}}">
       </a>
     </div>
-    <div class="main__msgs">Convo</div>
+
+    <div class="main__msgs">
+      {{#each chats.list.[1].messages}}
+        {{> chat/message author=this.author text=this.text time=this.time}}
+      {{/each}}
+    </div>
+
     <div class="main__edit-msg">
       <a href="#">
         <img src="{{imgRoutes.uploadFile}}">

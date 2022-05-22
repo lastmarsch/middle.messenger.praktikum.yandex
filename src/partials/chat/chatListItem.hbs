@@ -1,0 +1,14 @@
+<div class="chat-item {{#if opened}}checked{{/if}}">
+  <div class="chat-item__icon">
+  </div>
+  <div class="chat-item__text-group">
+    <span>{{username}}</span>
+    <span>{{lastMessage}}</span>
+  </div>
+  <div class="chat-item__msg-ifo-group">
+    <span>{{lastOnline}}</span>
+    {{#unless (eq unreadMessagesCount 0)}}
+      <span>{{unreadMessagesCount}}</span>
+    {{/unless}}
+  </div>
+</div>
