@@ -67,6 +67,46 @@ body {
     padding: 10px;
     background-color: $action-color;
     box-sizing: border-box;
+
+    .panel__left {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      padding: 0;
+    }
+
+    .panel__icon {
+      width: 36px;
+      height: 36px;
+      flex-grow: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-radius: 22px;
+      background-color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    .panel__user-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 0;
+
+      span:nth-of-type(1) {
+        @mixin Medium-bold-text;
+        color: white;
+      }
+
+      span:nth-of-type(2) {
+        @mixin Small-text;
+        color: white;
+      }
+    }
   }
 
   &__msgs {
@@ -91,11 +131,20 @@ body {
     gap: 20px;
     padding: 10px;
     box-sizing: border-box;
+
+    a {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .edit-msg__button {
     @mixin Bold-ordinary-text;
     color: white;
+    white-space: nowrap;
 
     width: 195px;
     height: 50px;
@@ -110,5 +159,9 @@ body {
     background-color: $action-color;
     box-sizing: border-box;
     border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

@@ -14,12 +14,15 @@
 </head>
 
 <body>
-  <a href="{{routes.pages.chat.href}}" class="side-button"><-</a>
+  <a href="{{routes.pages.chat.href}}" class="side-button">
+    <img src="{{imgRoutes.back}}">
+  </a>
   <div class="main-area">
     <div class="main-area__header">
-      <div class="main-area__icon">
-        <span>Change<br>avatar</span>
-      </div>
+      <label for="uploadAvatar" class="main-area__icon">
+        <img src="{{imgRoutes.avatar}}">
+        <input type="file" name="uploadAvatar" id="uploadAvatar" hidden="true">
+      </label>
       <span class="main-area__username">{{user.display_name}}</span>
     </div>
     {{{body}}}

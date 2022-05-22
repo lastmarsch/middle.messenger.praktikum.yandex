@@ -54,6 +54,8 @@ body {
     border-radius: 100px;
     box-sizing: border-box;
     background-color: $light-violet;
+    text-decoration: none;
+    color: $cool-dark;
 
     span {
       @mixin Small-text;
@@ -101,6 +103,7 @@ body {
     a {
       @mixin Bold-ordinary-text;
       color: $action-color;
+      text-decoration: none;
 
       &:nth-last-of-type(1) {
         color: $error-color;

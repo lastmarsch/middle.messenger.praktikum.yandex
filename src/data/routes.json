@@ -35,10 +35,6 @@
     "changePassword": {
       "title": "Изменить пароль",
       "href": "/src/pages/settings/changePassword.hbs"
-    },
-    "changeAvatar": {
-      "title": "Изменить аватар",
-      "href": "/src/pages/settings/changeAvatar.hbs"
     }
   }
 }
