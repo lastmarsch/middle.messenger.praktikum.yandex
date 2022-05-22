@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lastmarsch/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/config-default": "^2.5.0",
     "autoprefixer": "^10.4.7",
     "express": "^4.18.1",
     "handlebars": "^4.7.7",
@@ -34,6 +35,6 @@
     "> 1%"
   ],
   "engines": {
-    "node": ">=16.4.0"
+    "node": ">=12.0.0"
   }
 }
