@@ -97,12 +97,12 @@ body {
       align-items: flex-start;
       padding: 0;
 
-      span:nth-of-type(1) {
+      .user-info__username {
         @mixin Medium-bold-text;
         color: white;
       }
 
-      span:nth-of-type(2) {
+      .user-info__last-online {
         @mixin Small-text;
         color: white;
       }

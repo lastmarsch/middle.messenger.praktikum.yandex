@@ -28,7 +28,6 @@
 
   &__input:focus {
     border: none;
-    outline: none;
     border-bottom: 4px solid $cool-dark;
   }
 
