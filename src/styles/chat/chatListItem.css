@@ -1,0 +1,95 @@
+@import '../main.css';
+
+.chat-item {
+  height: 75px;
+  align-self: stretch;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 13px;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #1000ff14;
+    transition: all .1s ease-in-out;
+  }
+
+  &__icon {
+    width: 55px;
+    height: 55px;
+    flex-grow: 0;
+    background-color: white;
+    border-radius: 55px;
+  }
+
+  &__text-group {
+    align-self: stretch;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 5px;
+    padding: 0;
+    width: 325px;
+
+    .text-group__username {
+      @mixin Medium-bold-text;
+      color: $cool-grey;
+    }
+
+    .text-group__last-msg {
+      @mixin Small-text;
+      color: $cool-grey;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__msg-info-group {
+    width: 24px;
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 13px;
+    padding: 0;
+
+    .msg-info-group__last-online {
+      @mixin Small-text;
+      color: $cool-grey;
+    }
+
+    .msg-info-group__unread-msg {
+      @mixin Bold-ordinary-text;
+      font-size: 12px;
+      color: white;
+
+      width: 24px;
+      height: 24px;
+      flex-grow: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      border-radius: 24px;
+      background-color: $action-color;
+    }
+  }
+}
+
+.chat-item.checked {
+  cursor: pointer;
+  background-color: #1000ff14;
+  transition: all .1s ease-in-out;
+}
