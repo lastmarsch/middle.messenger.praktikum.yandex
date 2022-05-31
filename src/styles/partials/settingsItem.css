@@ -1,4 +1,4 @@
-@import '../main.css';
+@import "../main.css";
 
 .settings-item {
   width: 100%;
@@ -21,6 +21,7 @@
 
   &__title {
     @mixin Medium-bold-text;
+
     color: $cool-dark;
     width: 100%;
   }

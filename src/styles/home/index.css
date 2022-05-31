@@ -1,5 +1,4 @@
-@import '../main.css';
-
+@import "../main.css";
 
 body {
   background-color: $light-blue;
@@ -24,6 +23,7 @@ body {
 
   &__title {
     @mixin Title-text;
+
     color: $cool-dark;
     text-align: center;
     width: 100%;
@@ -31,6 +31,7 @@ body {
 
   &__link {
     @mixin Link-text;
+
     color: $action-color;
   }
 }

@@ -1,4 +1,4 @@
-@import '../main.css';
+@import "../main.css";
 
 body {
   display: flex;
@@ -64,6 +64,7 @@ body {
 
   &__username {
     @mixin Title-text;
+
     color: $cool-dark;
   }
 
@@ -90,6 +91,7 @@ body {
 
     a {
       @mixin Bold-ordinary-text;
+
       color: $action-color;
       text-decoration: none;
 
@@ -101,8 +103,8 @@ body {
 
   &__submit {
     @mixin Bold-ordinary-text;
-    color: white;
 
+    color: white;
     width: 200px;
     height: 35px;
     flex-grow: 0;

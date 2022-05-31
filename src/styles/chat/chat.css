@@ -1,4 +1,4 @@
-@import '../main.css';
+@import "../main.css";
 
 body {
   display: flex;
@@ -86,7 +86,7 @@ body {
       align-items: center;
       gap: 10px;
       border-radius: 22px;
-      background-color: #ffffff;
+      background-color: #fff;
       box-sizing: border-box;
     }
 
@@ -99,11 +99,13 @@ body {
 
       .user-info__username {
         @mixin Medium-bold-text;
+
         color: white;
       }
 
       .user-info__last-online {
         @mixin Small-text;
+
         color: white;
       }
     }
@@ -143,9 +145,9 @@ body {
 
   .edit-msg__button {
     @mixin Bold-ordinary-text;
+
     color: white;
     white-space: nowrap;
-
     width: 195px;
     height: 50px;
     flex-grow: 0;

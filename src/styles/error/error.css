@@ -1,4 +1,4 @@
-@import '../main.css';
+@import "../main.css";
 
 body {
   background-color: #f4d7d7;
@@ -19,10 +19,11 @@ body {
   justify-content: flex-start;
   align-items: center;
   gap: 50px;
-  padding: 50px;  
+  padding: 50px;
 
   &__title {
     @mixin Title-text;
+
     color: $cool-dark;
     text-align: center;
     width: 100%;
@@ -30,6 +31,7 @@ body {
 
   &__link {
     @mixin Link-text;
+
     color: $action-color;
   }
 }
