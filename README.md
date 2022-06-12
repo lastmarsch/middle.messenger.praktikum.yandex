@@ -1,8 +1,10 @@
+
 # Модуль 1. Веб-приложение "Чат"
 Проектная работа первого модуля курса Мидл фронтенд-разработчик. 
 
 ## Пулл реквесты
 Спринт 1: [#1](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/1)
+
 Спринт 2: [#2](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/2)
 
 ## Страница проекта
