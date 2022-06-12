@@ -1,0 +1,54 @@
+@import "../../../../app.css";
+
+.message {
+  width: 100%;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 0;
+  box-sizing: border-box;
+
+  &__container {
+    max-width: 400px;
+    min-width: 100px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+    background-color: $outgoing-msg;
+    border-radius: 5px 5px 0;
+  }
+
+  &.left-align {
+    justify-content: flex-start;
+  }
+
+  &.left-align &__container {
+    border-radius: 0 5px 5px;
+    background-color: $incoming-msg;
+  }
+
+  &__text {
+    @mixin Ordinary-text;
+
+    color: $cool-dark;
+    align-self: stretch;
+    flex-grow: 0;
+    text-align: left;
+  }
+
+  &__time {
+    @mixin Small-text;
+
+    color: $hint-grey;
+    align-self: stretch;
+    flex-grow: 0;
+    text-align: right;
+  }
+}
