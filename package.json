@@ -10,13 +10,6 @@
     "start": "npm run build && node ./server.js",
     "start2": "npm run compile && npm run build && node ./server.js"
   },
-  "alias": {
-    "core": "./src/core",
-    "components": "./src/components",
-    "pages": "./src/pages",
-    "src": "./src",
-    "static": "./static"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lastmarsch/middle.messenger.praktikum.yandex.git"

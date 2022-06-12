@@ -1,10 +1,11 @@
-import { Block } from 'core';
+import { Block } from '../../core';
+import { IProps } from '../../core/Block';
+import Input from '../../components/input';
 import styles from './settings.module.css';
 import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
-import { IProps } from '../../core/Block';
 import validationRules from '../../utils/validationRules';
 
 export default class ChangeInfoPage extends Block {
@@ -16,19 +17,19 @@ export default class ChangeInfoPage extends Block {
 
       console.log(data);
 
-      Object.values(this.children).forEach((child) => {
+      (Object.values(this.children) as Input[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.validateSelf
-        || !(child._props.id in data)) { return; }
+        || !child.props.validated
+        || !(child.props.id in data)) { return; }
 
         // some logic here
-        console.log(`${child._props.id}: ${child.validateSelf()}`);
+        child.validateSelf();
       });
     };
     super({ ...props, events: { submit: onSubmit } });
   }
 
-  render() {
+  protected render() {
     return `
     <div class="${styles['app-container']}">
       {{{ Link href="/chat" class="${styles['side-button']}" img="${backPath}" }}}
@@ -49,6 +50,7 @@ export default class ChangeInfoPage extends Block {
             value="${user.first_name}"
             regexp="${validationRules.first_name.regexp}" 
             rules="${validationRules.first_name.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="second_name" 
@@ -58,6 +60,7 @@ export default class ChangeInfoPage extends Block {
             value="${user.second_name}"
             regexp="${validationRules.second_name.regexp}" 
             rules="${validationRules.second_name.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="display_name" 
@@ -67,15 +70,17 @@ export default class ChangeInfoPage extends Block {
             value="${user.display_name}"
             regexp="${validationRules.first_name.regexp}" 
             rules="${validationRules.first_name.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="login" 
             name="login" 
-            title="Username" 
+            title="Login" 
             type="text"
             value="${user.login}"
             regexp="${validationRules.login.regexp}" 
             rules="${validationRules.login.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="email" 
@@ -85,6 +90,7 @@ export default class ChangeInfoPage extends Block {
             value="${user.email}"
             regexp="${validationRules.email.regexp}" 
             rules="${validationRules.email.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="phone" 
@@ -94,6 +100,7 @@ export default class ChangeInfoPage extends Block {
             value="${user.phone}"
             regexp="${validationRules.phone.regexp}" 
             rules="${validationRules.phone.rules}" 
+            validated=true
           }}}
         </form>
         {{{ Button id="settings" form="settings" class="${styles['main-area__submit']}" type="submit" innerText="Save changes"}}}

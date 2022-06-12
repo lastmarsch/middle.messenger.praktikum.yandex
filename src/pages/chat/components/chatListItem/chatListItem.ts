@@ -1,8 +1,20 @@
-import { Block } from 'core';
+import { Block } from '../../../../core';
 import styles from './chatListItem.module.css';
 
+interface ChatListItemProps {
+  opened?: boolean,
+  username?: string,
+  lastMessage?: string,
+  lastOnline?: string,
+  unreadMessagesCount?: number,
+}
+
 export default class ChatListItem extends Block {
-  protected static componentName = 'ChatListItem';
+  public static componentName = 'ChatListItem';
+
+  constructor(props: ChatListItemProps) {
+    super({ ...props });
+  }
 
   protected render(): string {
     let buffHtml = `
@@ -24,7 +36,7 @@ export default class ChatListItem extends Block {
           >{{ lastOnline }}</span
         >`;
 
-    buffHtml += (this._props.unreadMessagesCount)
+    buffHtml += (this.props.unreadMessagesCount)
       ? `<span class="${styles['msg-info-group__unread-msg']}">{{ unreadMessagesCount }}</span>`
       : '';
     buffHtml += `</div>

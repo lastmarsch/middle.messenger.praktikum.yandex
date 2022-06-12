@@ -1,4 +1,5 @@
-import { Block } from 'core';
+import Input from '../../components/input';
+import { Block } from '../../core';
 import { IProps } from '../../core/Block';
 import validationRules from '../../utils/validationRules';
 import styles from './auth.module.css';
@@ -12,19 +13,19 @@ export default class SignInPage extends Block {
 
       console.log(data);
 
-      Object.values(this.children).forEach((child) => {
+      (Object.values(this.children) as Input[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.validateSelf
-        || !(child._props.id in data)) { return; }
+        || !child.props.validated
+        || !(child.props.id in data)) { return; }
 
         // some logic here
-        console.log(`${child._props.id}: ${child.validateSelf()}`);
+        child.validateSelf();
       });
     };
     super({ ...props, events: { submit: onSubmit } });
   }
 
-  render() {
+  protected render() {
     return `
     <div class="${styles['app-container']}">
       <div class="${styles.container}">
@@ -40,6 +41,7 @@ export default class SignInPage extends Block {
             type="text" 
             regexp="${validationRules.login.regexp}" 
             rules="${validationRules.login.rules}" 
+            validated=true
           }}}
           {{{ Input 
             id="password" 
@@ -48,6 +50,7 @@ export default class SignInPage extends Block {
             type="password" 
             regexp="${validationRules.password.regexp}" 
             rules="${validationRules.password.rules}" 
+            validated=true
           }}}
         </form>
 

@@ -1,14 +1,9 @@
-import { Block } from 'core';
+import { Block } from '../../core';
 import styles from './home.module.css';
 import * as routes from '../../data/routes.json';
 
 export default class HomePage extends Block {
-  constructor() {
-    super({
-    });
-  }
-
-  render() {
+  protected render() {
     let buffHtml = `
     <div class="${styles['app-container']}">
       <div class="${styles.routes}">
@@ -22,7 +17,7 @@ export default class HomePage extends Block {
           href="${page.href}"
           class="${styles.routes__link}" 
           text="${page.title}" 
-      }}}`;
+        }}}`;
     });
     buffHtml += '</div></div>';
     return buffHtml;

@@ -1,4 +1,6 @@
-import { Block } from 'core';
+import { Block } from '../../core';
+import { IProps } from '../../core/Block';
+import Input from '../../components/input';
 import styles from './chat.module.css';
 import {
   settingsPath, plusPath, avatarPath, morePath, paperclipPath, sendPath,
@@ -15,19 +17,19 @@ export default class ChatPage extends Block {
 
       console.log(data);
 
-      Object.values(this.children).forEach((child) => {
+      (Object.values(this.children) as Input[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.validateSelf
-        || !(child._props.id in data)) { return; }
+        || !child.props.validated
+        || !(child.props.id in data)) { return; }
 
         // some logic here
-        console.log(`${child._props.id}: ${child.validateSelf()}`);
+        child.validateSelf();
       });
     };
     super({ ...props, currentConvoId: 1, events: { submit: onSubmit } });
   }
 
-  render() {
+  protected render() {
     let buffHtml = `
     <div class="${styles['app-container']}">
       <div class="${styles['side-menu']}">
@@ -51,7 +53,7 @@ export default class ChatPage extends Block {
         <div class="${styles['side-menu__list']}">`;
 
     chats.list.forEach((user: {
-      author: number,
+      id: number,
       lastOnline: string,
       messages: Array<{ author: number, text: string, time: string }>
       name: string,
@@ -79,11 +81,11 @@ export default class ChatPage extends Block {
           </div>
           <div class="${styles['panel__user-info']}">
             <span class="${styles['user-info__username']}"
-              >${chats.list[this._props.currentConvoId].name}</span
+              >${chats.list[this.props.currentConvoId].name}</span
             >
             <span class="${styles['user-info__last-online']}"
               >Last online:
-              ${chats.list[this._props.currentConvoId].lastOnline}</span
+              ${chats.list[this.props.currentConvoId].lastOnline}</span
             >
           </div>
         </div>
@@ -93,7 +95,7 @@ export default class ChatPage extends Block {
       </div>
       <div class="${styles.main__msgs}">`;
 
-    chats.list[this._props.currentConvoId].messages.forEach((msg: {
+    chats.list[this.props.currentConvoId].messages.forEach((msg: {
       author: number,
       text: string,
       time: string
@@ -117,6 +119,7 @@ export default class ChatPage extends Block {
             placeholder="Start typing..." 
             regexp="${validationRules.message.regexp}"               
             rules="${validationRules.message.rules}" 
+            validated=true
           }}}
           {{{ Button 
             id="submit" 

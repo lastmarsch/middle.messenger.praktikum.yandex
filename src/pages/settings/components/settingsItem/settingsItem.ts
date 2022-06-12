@@ -1,14 +1,22 @@
-import Input from 'components/input';
-import { IProps } from '../../../../core/Block';
+import Input from '../../../../components/input';
 import styles from './settingsItem.module.css';
 
-export default class SettingsItem extends Input {
-  protected static componentName = 'SettingsItem';
+interface SettingsItemProps {
+  title?: string,
+  type?: string,
+  name?: string,
+  id?: string,
+  value?: string,
+  placeholder?: string,
+  rules?: string,
+  invalidClassName?: string,
+}
 
-  constructor(props: IProps) {
-    super({
-      ...props,
-    });
+export default class SettingsItem extends Input {
+  public static componentName = 'SettingsItem';
+
+  constructor(props: SettingsItemProps) {
+    super({ ...props });
 
     this.setProps({ invalidClassName: styles.invalid });
   }

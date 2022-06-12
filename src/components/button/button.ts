@@ -1,5 +1,5 @@
-import { Block } from 'core';
-import styles from './button.module.css';
+import { Block } from '../../core';
+// import styles from './button.module.css';
 
 interface ButtonProps {
   type?: string,
@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 export default class Button extends Block {
-  protected static componentName = 'Button';
+  public static componentName = 'Button';
 
   constructor(props: ButtonProps) {
     super({ ...props });

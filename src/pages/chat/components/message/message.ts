@@ -1,14 +1,23 @@
-import { Block } from 'core';
-
+import { Block } from '../../../../core';
 import styles from './message.module.css';
 
+interface MessageProps {
+  author?: number,
+  text?: string,
+  time?: string,
+}
+
 export default class Message extends Block {
-  protected static componentName = 'Message';
+  public static componentName = 'Message';
+
+  constructor(props: MessageProps) {
+    super({ ...props });
+  }
 
   protected render(): string {
     let buffHtml = `
       <div class="${styles.message}`;
-    buffHtml += (this._props.author) ? `${styles['left-align']}` : '';
+    buffHtml += (this.props.author) ? ` ${styles['left-align']}` : '';
     buffHtml += `">
       <div class="${styles.message__container}">
         <span class="${styles.message__text}">

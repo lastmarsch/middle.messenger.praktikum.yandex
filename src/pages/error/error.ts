@@ -1,24 +1,30 @@
-import { Block } from 'core';
+import { Block } from '../../core';
 import styles from './error.module.css';
 
+interface ErrorProps {
+  code?: string,
+  text?: string,
+}
+
 export default class ErrorPage extends Block {
-  constructor(code: string = '', text: string = '') {
-    super({
-      code,
-      text,
-    });
+  constructor(props: ErrorProps) {
+    super({ ...props });
   }
 
-  render() {
+  protected render() {
     return `
     <div class="${styles['app-container']}">
       <div class="${styles.error}">
         <span class="${styles.error__title}">
-          ${this._props.code}
+          ${this.props.code}
           <br>
-          ${this._props.text}
+          ${this.props.text}
         </span>
-        {{{ Link href="/chat" class="${styles.error__link}" text="Back to chats" }}}
+        {{{ Link 
+          href="/chat" 
+          class="${styles.error__link}" 
+          text="Back to chats" 
+        }}}
       </div>
     </div>`;
   }

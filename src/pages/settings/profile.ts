@@ -1,4 +1,4 @@
-import { Block } from 'core';
+import { Block } from '../../core';
 import styles from './settings.module.css';
 import * as user from '../../data/user.json';
 import {
@@ -6,7 +6,7 @@ import {
 } from '../../const/images';
 
 export default class ProfilePage extends Block {
-  render() {
+  protected render() {
     return `
     <div class="${styles['app-container']}">
       {{{ Link href="/chat" class="${styles['side-button']}" img="${backPath}" }}}

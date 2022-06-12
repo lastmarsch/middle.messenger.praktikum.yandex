@@ -1,10 +1,11 @@
-import { Block } from 'core';
+import { Block } from '../../core';
+import { IProps } from '../../core/Block';
+import Input from '../../components/input';
 import styles from './settings.module.css';
 import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
-import { IProps } from '../../core/Block';
 import validationRules from '../../utils/validationRules';
 
 export default class ChangePasswordPage extends Block {
@@ -16,19 +17,19 @@ export default class ChangePasswordPage extends Block {
 
       console.log(data);
 
-      Object.values(this.children).forEach((child) => {
+      (Object.values(this.children) as Input[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.validateSelf
-        || !(child._props.id in data)) { return; }
+        || !child.props.validated
+        || !(child.props.id in data)) { return; }
 
         // some logic here
-        console.log(`${child._props.id}: ${child.validateSelf()}`);
+        child.validateSelf();
       });
     };
     super({ ...props, events: { submit: onSubmit } });
   }
 
-  render() {
+  protected render() {
     return `
     <div class="${styles['app-container']}">
       {{{ Link href="/chat" class="${styles['side-button']}" img="${backPath}" }}}
@@ -48,6 +49,7 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${validationRules.password.regexp}" 
             rules="${validationRules.password.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="new_password" 
@@ -56,6 +58,7 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${validationRules.password.regexp}" 
             rules="${validationRules.password.rules}" 
+            validated=true
           }}}
           {{{ SettingsItem 
             id="confirm_password" 
@@ -64,6 +67,7 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${validationRules.password.regexp}" 
             rules="${validationRules.password.rules}" 
+            validated=true
           }}}
         </form>
         {{{ Button id="settings" form="settings" class="${styles['main-area__submit']}" type="submit" innerText="Save changes"}}}

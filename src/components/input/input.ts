@@ -1,4 +1,4 @@
-import { Block } from 'core';
+import { Block } from '../../core';
 import styles from './input.module.css';
 
 interface InputProps {
@@ -12,10 +12,12 @@ interface InputProps {
   required?: boolean,
   regexp?: string,
   rules?: string,
+  invalidClassName?: string,
+  validated?: boolean
 }
 
 export default class Input extends Block {
-  protected static componentName = 'Input';
+  public static componentName = 'Input';
 
   constructor(props: InputProps) {
     super({
@@ -29,7 +31,7 @@ export default class Input extends Block {
   }
 
   addEvents() {
-    const input = this._element.querySelector(`#${this._props.id}`);
+    const input = this._element.querySelector(`#${this.props.id}`);
     if (!input) { return; }
 
     input.addEventListener('focus', this.validateSelf.bind(this));
@@ -37,23 +39,24 @@ export default class Input extends Block {
   }
 
   removeEvents() {
-    const input = this._element.querySelector(`#${this._props.id}`);
+    const input = this._element.querySelector(`#${this.props.id}`);
     if (!input) { return; }
 
     input.removeEventListener('focus', this.validateSelf.bind(this));
     input.addEventListener('blur', this.validateSelf.bind(this));
   }
 
-  protected validateSelf() {
-    const input = this._element.querySelector(`#${this._props.id}`);
-    if (!input && !this._props.regexp) { return; }
+  validateSelf() {
+    const input: HTMLInputElement = this._element.querySelector(`#${this.props.id}`)!;
+    if (!input && !this.props.regexp) { return; }
 
     const text = input.value;
-    const isValid = RegExp(this._props.regexp).test(text);
+    const isValid = RegExp(this.props.regexp).test(text);
     if (isValid) {
-      this._element.classList.remove(this._props.invalidClassName);
-    } else { this._element.classList.add(this._props.invalidClassName); }
-    return isValid;
+      this._element.classList.remove(this.props.invalidClassName);
+    } else { this._element.classList.add(this.props.invalidClassName); }
+
+    // console.log(`${this.props.id}: ${isValid}`);
   }
 
   protected render(): string {

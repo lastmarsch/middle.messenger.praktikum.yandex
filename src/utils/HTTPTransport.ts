@@ -27,7 +27,7 @@ function queryStringify(data?: { [key: string]: number | string | object }) {
 }
 
 export interface IOptions {
-  method?: METHODS;
+  method: METHODS;
   retries?: number;
   timeout?: number;
   headers?: { [key: string]: string };
@@ -35,26 +35,26 @@ export interface IOptions {
 }
 
 class HTTPTransport {
-  get = (url: string, options: IOptions = { timeout: 5000 }) => this.request(
+  get = (url: string, options: IOptions = { method: METHODS.GET, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.GET },
     options.timeout,
   );
 
   // PUT, POST, DELETE
-  put = (url: string, options: IOptions = { timeout: 5000 }) => this.request(
+  put = (url: string, options: IOptions = { method: METHODS.PUT, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.PUT },
     options.timeout,
   );
 
-  post = (url: string, options: IOptions = { timeout: 5000 }) => this.request(
+  post = (url: string, options: IOptions = { method: METHODS.POST, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.POST },
     options.timeout,
   );
 
-  delete = (url: string, options: IOptions = { timeout: 5000 }) => this.request(
+  delete = (url: string, options: IOptions = { method: METHODS.DELETE, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.DELETE },
     options.timeout,

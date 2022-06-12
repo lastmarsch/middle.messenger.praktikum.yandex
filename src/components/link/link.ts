@@ -1,8 +1,6 @@
-import { Block } from 'core';
-import styles from './link.module.css';
-
+import { Block, renderDOM } from '../../core';
+// import styles from './link.module.css';
 import routes from '../../const/routes';
-import { renderDOM } from '../../core';
 
 interface LinkProps {
   href: string,
@@ -12,7 +10,7 @@ interface LinkProps {
 }
 
 export default class Link extends Block {
-  protected static componentName = 'Link';
+  public static componentName = 'Link';
 
   constructor(props: LinkProps) {
     const onClick = (e: MouseEvent) => {

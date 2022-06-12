@@ -4,13 +4,13 @@ import EventBus from './EventBus';
 
 export interface IProps {
   tagName ?: string,
-  events ?: Record<string, () => void>,
+  events ?: Record<string, (...args: any[]) => void>,
   [prop: string]: any
 }
 
-interface IMeta {
-  props: IProps
-}
+// interface IMeta {
+//   props: IProps
+// }
 
 export default class Block {
   static EVENTS = {
@@ -26,9 +26,9 @@ export default class Block {
 
   private _eventBus: () => EventBus;
 
-  private readonly _meta: IMeta;
+  // private readonly _meta: IMeta;
 
-  protected _props: IProps;
+  public props: IProps;
 
   protected state: any = {};
 
@@ -37,11 +37,11 @@ export default class Block {
   protected refs: { [key: string]: HTMLElement } = {};
 
   constructor(props: IProps = { }) {
-    this._meta = {
-      props,
-    };
+    // this._meta = {
+    //   props,
+    // };
 
-    this._props = this._makePropsProxy(props);
+    this.props = this._makePropsProxy(props);
     this.state = this._makePropsProxy(this.state);
 
     const eventBus = new EventBus();
@@ -67,7 +67,7 @@ export default class Block {
   }
 
   private _createDocumentElement() {
-    const tagName = this._props.tagName || 'template';
+    const tagName = this.props.tagName || 'template';
     return document.createElement(tagName);
   }
 
@@ -118,9 +118,9 @@ export default class Block {
       return;
     }
 
-    const prevProps = { ...this._props };
-    Object.assign(this._props, nextProps);
-    this._eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, this._props);
+    const prevProps = { ...this.props };
+    Object.assign(this.props, nextProps);
+    this._eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, this.props);
   };
 
   get element() {
@@ -150,7 +150,7 @@ export default class Block {
 
     const template = Handlebars.compile(this.render());
     fragment.innerHTML = template({
-      ...this._props,
+      ...this.props,
       ...this.state,
       children: this.children,
       refs: this.refs,
@@ -179,7 +179,7 @@ export default class Block {
   private _addEvents() {
     this.addEvents();
 
-    const { events } = this._props as IProps;
+    const { events } = this.props as IProps;
 
     if (!events) {
       return;
@@ -197,7 +197,7 @@ export default class Block {
   private _removeEvents() {
     this.removeEvents();
 
-    const { events } = this._props as IProps;
+    const { events } = this.props as IProps;
 
     if (!events || !this._element) {
       return;
@@ -230,8 +230,7 @@ export default class Block {
         target[prop] = value;
         return true;
       },
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      deleteProperty(target, prop: string) {
+      deleteProperty() {
         throw new Error('Нет прав');
       },
       ownKeys(target) {
