@@ -121,5 +121,9 @@
     background-color: $action-color;
     box-sizing: border-box;
     border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

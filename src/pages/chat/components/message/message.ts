@@ -10,16 +10,16 @@ export default class Message extends Block {
       <div class="${styles.message}`;
     buffHtml += (this._props.author) ? `${styles['left-align']}` : '';
     buffHtml += `">
-          <div class="${styles.message__container}">
-              <span class="${styles.message__text}">
-                  {{ text }}
-              </span>
-              <span class="${styles.message__time}">
-                  {{ time }}
-              </span>
-          </div>
+      <div class="${styles.message__container}">
+        <span class="${styles.message__text}">
+          {{ text }}
+        </span>
+        <span class="${styles.message__time}">
+          {{ time }}
+        </span>
       </div>
-      `;
+    </div>
+    `;
     return buffHtml;
   }
 }

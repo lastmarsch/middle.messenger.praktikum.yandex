@@ -4,8 +4,30 @@ import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
+import { IProps } from '../../core/Block';
+import validationRules from '../../utils/validationRules';
 
 export default class ChangeInfoPage extends Block {
+  constructor(props: IProps) {
+    const onSubmit = (e: SubmitEvent) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const data = Object.fromEntries(new FormData(form));
+
+      console.log(data);
+
+      Object.values(this.children).forEach((child) => {
+        if (!document.body.contains(child.element)
+        || !child.validateSelf
+        || !(child._props.id in data)) { return; }
+
+        // some logic here
+        console.log(`${child._props.id}: ${child.validateSelf()}`);
+      });
+    };
+    super({ ...props, events: { submit: onSubmit } });
+  }
+
   render() {
     return `
     <div class="${styles['app-container']}">
@@ -19,12 +41,60 @@ export default class ChangeInfoPage extends Block {
           <span class="${styles['main-area__username']}">${user.display_name}</span>
         </div>
         <form id="settings" class="${styles['main-area__list']}">
-          {{{ SettingsItem name="first_name" title="First name" value="${user.first_name}"}}}
-          {{{ SettingsItem name="second_name" title="Second name" value="${user.second_name}"}}}
-          {{{ SettingsItem name="display_name" title="Display name" value="${user.display_name}"}}}
-          {{{ SettingsItem name="login" title="Login" value="${user.login}"}}}
-          {{{ SettingsItem name="email" title="Email" value="${user.email}"}}}
-          {{{ SettingsItem name="phone" title="Phone" value="${user.phone}"}}}
+          {{{ SettingsItem 
+            id="first_name" 
+            name="first_name" 
+            title="First name" 
+            type="text"
+            value="${user.first_name}"
+            regexp="${validationRules.first_name.regexp}" 
+            rules="${validationRules.first_name.rules}" 
+          }}}
+          {{{ SettingsItem 
+            id="second_name" 
+            name="second_name" 
+            title="Second name" 
+            type="text"
+            value="${user.second_name}"
+            regexp="${validationRules.second_name.regexp}" 
+            rules="${validationRules.second_name.rules}" 
+          }}}
+          {{{ SettingsItem 
+            id="display_name" 
+            name="display_name" 
+            title="Display name" 
+            type="text"
+            value="${user.display_name}"
+            regexp="${validationRules.first_name.regexp}" 
+            rules="${validationRules.first_name.rules}" 
+          }}}
+          {{{ SettingsItem 
+            id="login" 
+            name="login" 
+            title="Username" 
+            type="text"
+            value="${user.login}"
+            regexp="${validationRules.login.regexp}" 
+            rules="${validationRules.login.rules}" 
+          }}}
+          {{{ SettingsItem 
+            id="email" 
+            name="email" 
+            title="Email" 
+            type="text"
+            value="${user.email}"
+            regexp="${validationRules.email.regexp}" 
+            rules="${validationRules.email.rules}" 
+          }}}
+          {{{ SettingsItem 
+            id="phone" 
+            name="phone" 
+            title="Phone" 
+            type="tel"
+            value="${user.phone}"
+            regexp="${validationRules.phone.regexp}" 
+            rules="${validationRules.phone.rules}" 
+          }}}
         </form>
         {{{ Button id="settings" form="settings" class="${styles['main-area__submit']}" type="submit" innerText="Save changes"}}}
       </div>

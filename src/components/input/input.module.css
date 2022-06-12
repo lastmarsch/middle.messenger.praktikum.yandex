@@ -9,6 +9,14 @@
   gap: 3px;
   padding: 0;
 
+  .invalid &__input {
+    border-color: $error-color;
+  }
+
+  .invalid &__error {
+    display: block;
+  }
+
   &__label {
     @mixin Small-text;
 
@@ -20,22 +28,23 @@
 
     height: 35px;
     width: 100%;
-    border: none;
     padding: 5px 10px;
     box-sizing: border-box;
-    border-bottom: 2px solid $cool-dark;
+    border: none;
+    border-bottom: solid 2px $cool-dark;
     background: none;
     transition: all 0.1s ease-in-out;
-  }
 
-  &__input:focus {
-    border: none;
-    border-bottom: 4px solid $cool-dark;
+    &:focus {
+      transition: all 0.2s ease-in-out;
+      border-width: 4px;
+    }
   }
 
   &__error {
     @mixin Hint-text;
 
     color: $error-color;
+    display: none;
   }
 }

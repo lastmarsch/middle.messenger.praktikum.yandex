@@ -176,7 +176,27 @@ export default class Block {
     return fragment.content;
   }
 
+  private _addEvents() {
+    this.addEvents();
+
+    const { events } = this._props as IProps;
+
+    if (!events) {
+      return;
+    }
+
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element.addEventListener(event, listener);
+    });
+  }
+
+  // For override
+  // eslint-disable-next-line class-methods-use-this
+  protected addEvents() {}
+
   private _removeEvents() {
+    this.removeEvents();
+
     const { events } = this._props as IProps;
 
     if (!events || !this._element) {
@@ -188,17 +208,9 @@ export default class Block {
     });
   }
 
-  private _addEvents() {
-    const { events } = this._props as IProps;
-
-    if (!events) {
-      return;
-    }
-
-    Object.entries(events).forEach(([event, listener]) => {
-      this._element.addEventListener(event, listener);
-    });
-  }
+  // For override
+  // eslint-disable-next-line class-methods-use-this
+  protected removeEvents() {}
 
   // eslint-disable-next-line class-methods-use-this
   private _makePropsProxy(props: IProps) {

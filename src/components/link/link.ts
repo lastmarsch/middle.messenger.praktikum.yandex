@@ -23,9 +23,13 @@ export default class Link extends Block {
   }
 
   protected render(): string {
-    return `<a href="{{ href }}" class="{{ class }}">
-              <img src="{{ img }}">
-              {{ text }}
-            </a>`;
+    return `  
+    <a 
+      href="{{ href }}" 
+      class="{{ class }}"
+    >
+      <img src="{{ img }}" />
+      {{ text }}
+    </a>`;
   }
 }

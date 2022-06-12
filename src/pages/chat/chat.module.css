@@ -126,7 +126,7 @@
   }
 
   &__edit-msg {
-    height: 70px;
+    /* height: 70px; */
     align-self: stretch;
     flex-grow: 0;
     display: flex;
