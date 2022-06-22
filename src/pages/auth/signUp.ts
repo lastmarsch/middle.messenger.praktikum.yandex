@@ -1,7 +1,7 @@
 import { Block } from '../../core';
 import { IProps } from '../../core/Block';
 import Input from '../../components/input';
-import validationRules from '../../utils/validationRules';
+import VALIDATION_RULES from '../../utils/validationRules';
 import styles from './auth.module.css';
 
 export default class SignUpPage extends Block {
@@ -38,8 +38,8 @@ export default class SignUpPage extends Block {
             name="first_name" 
             title="First name" 
             type="text"
-            regexp="${validationRules.first_name.regexp}" 
-            rules="${validationRules.first_name.rules}" 
+            regexp="${VALIDATION_RULES.first_name.regexp}" 
+            rules="${VALIDATION_RULES.first_name.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -47,8 +47,8 @@ export default class SignUpPage extends Block {
             name="second_name" 
             title="Second name" 
             type="text"
-            regexp="${validationRules.second_name.regexp}" 
-            rules="${validationRules.second_name.rules}" 
+            regexp="${VALIDATION_RULES.second_name.regexp}" 
+            rules="${VALIDATION_RULES.second_name.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -56,8 +56,8 @@ export default class SignUpPage extends Block {
             name="login" 
             title="Username" 
             type="text"
-            regexp="${validationRules.login.regexp}" 
-            rules="${validationRules.login.rules}" 
+            regexp="${VALIDATION_RULES.login.regexp}" 
+            rules="${VALIDATION_RULES.login.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -65,8 +65,8 @@ export default class SignUpPage extends Block {
             name="email" 
             title="Email" 
             type="text"
-            regexp="${validationRules.email.regexp}" 
-            rules="${validationRules.email.rules}" 
+            regexp="${VALIDATION_RULES.email.regexp}" 
+            rules="${VALIDATION_RULES.email.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -74,8 +74,8 @@ export default class SignUpPage extends Block {
             name="phone" 
             title="Phone" 
             type="tel"
-            regexp="${validationRules.phone.regexp}" 
-            rules="${validationRules.phone.rules}" 
+            regexp="${VALIDATION_RULES.phone.regexp}" 
+            rules="${VALIDATION_RULES.phone.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -83,8 +83,8 @@ export default class SignUpPage extends Block {
             name="password" 
             title="Password" 
             type="password"
-            regexp="${validationRules.password.regexp}" 
-            rules="${validationRules.password.rules}" 
+            regexp="${VALIDATION_RULES.password.regexp}" 
+            rules="${VALIDATION_RULES.password.rules}" 
             validated=true
           }}}
         </form>

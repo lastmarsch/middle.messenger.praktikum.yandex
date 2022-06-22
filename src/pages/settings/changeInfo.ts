@@ -6,7 +6,7 @@ import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
-import validationRules from '../../utils/validationRules';
+import VALIDATION_RULES from '../../utils/validationRules';
 
 export default class ChangeInfoPage extends Block {
   constructor(props: IProps) {
@@ -48,8 +48,8 @@ export default class ChangeInfoPage extends Block {
             title="First name" 
             type="text"
             value="${user.first_name}"
-            regexp="${validationRules.first_name.regexp}" 
-            rules="${validationRules.first_name.rules}" 
+            regexp="${VALIDATION_RULES.first_name.regexp}" 
+            rules="${VALIDATION_RULES.first_name.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -58,8 +58,8 @@ export default class ChangeInfoPage extends Block {
             title="Second name" 
             type="text"
             value="${user.second_name}"
-            regexp="${validationRules.second_name.regexp}" 
-            rules="${validationRules.second_name.rules}" 
+            regexp="${VALIDATION_RULES.second_name.regexp}" 
+            rules="${VALIDATION_RULES.second_name.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -68,8 +68,8 @@ export default class ChangeInfoPage extends Block {
             title="Display name" 
             type="text"
             value="${user.display_name}"
-            regexp="${validationRules.first_name.regexp}" 
-            rules="${validationRules.first_name.rules}" 
+            regexp="${VALIDATION_RULES.first_name.regexp}" 
+            rules="${VALIDATION_RULES.first_name.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -78,8 +78,8 @@ export default class ChangeInfoPage extends Block {
             title="Login" 
             type="text"
             value="${user.login}"
-            regexp="${validationRules.login.regexp}" 
-            rules="${validationRules.login.rules}" 
+            regexp="${VALIDATION_RULES.login.regexp}" 
+            rules="${VALIDATION_RULES.login.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -88,8 +88,8 @@ export default class ChangeInfoPage extends Block {
             title="Email" 
             type="text"
             value="${user.email}"
-            regexp="${validationRules.email.regexp}" 
-            rules="${validationRules.email.rules}" 
+            regexp="${VALIDATION_RULES.email.regexp}" 
+            rules="${VALIDATION_RULES.email.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -98,8 +98,8 @@ export default class ChangeInfoPage extends Block {
             title="Phone" 
             type="tel"
             value="${user.phone}"
-            regexp="${validationRules.phone.regexp}" 
-            rules="${validationRules.phone.rules}" 
+            regexp="${VALIDATION_RULES.phone.regexp}" 
+            rules="${VALIDATION_RULES.phone.rules}" 
             validated=true
           }}}
         </form>

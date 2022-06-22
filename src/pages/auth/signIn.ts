@@ -1,7 +1,7 @@
 import Input from '../../components/input';
 import { Block } from '../../core';
 import { IProps } from '../../core/Block';
-import validationRules from '../../utils/validationRules';
+import VALIDATION_RULES from '../../utils/validationRules';
 import styles from './auth.module.css';
 
 export default class SignInPage extends Block {
@@ -39,8 +39,8 @@ export default class SignInPage extends Block {
             name="login" 
             title="Username" 
             type="text" 
-            regexp="${validationRules.login.regexp}" 
-            rules="${validationRules.login.rules}" 
+            regexp="${VALIDATION_RULES.login.regexp}" 
+            rules="${VALIDATION_RULES.login.rules}" 
             validated=true
           }}}
           {{{ Input 
@@ -48,8 +48,8 @@ export default class SignInPage extends Block {
             name="password" 
             title="Password" 
             type="password" 
-            regexp="${validationRules.password.regexp}" 
-            rules="${validationRules.password.rules}" 
+            regexp="${VALIDATION_RULES.password.regexp}" 
+            rules="${VALIDATION_RULES.password.rules}" 
             validated=true
           }}}
         </form>
