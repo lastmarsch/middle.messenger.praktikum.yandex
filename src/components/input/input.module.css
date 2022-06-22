@@ -9,14 +9,6 @@
   gap: 3px;
   padding: 0;
 
-  .invalid &__input {
-    border-color: $error-color;
-  }
-
-  .invalid &__error {
-    display: block;
-  }
-
   &__label {
     @mixin Small-text;
 
@@ -46,5 +38,13 @@
 
     color: $error-color;
     display: none;
+  }
+
+  .invalid &__input {
+    border-color: $error-color;
+  }
+
+  .invalid &__error {
+    display: block;
   }
 }
