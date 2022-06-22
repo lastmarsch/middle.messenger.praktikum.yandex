@@ -1,9 +1,0 @@
-{
-  "addUser": "../../../static/assets/Plus.svg",
-  "avatar": "../../../static/assets/AvatarPlaceholder.svg",
-  "back": "../../../static/assets/Back.svg",
-  "more": "../../../static/assets/More.svg",
-  "sendMessage": "../../../static/assets/Send.svg",
-  "settings": "../../../static/assets/Settings.svg",
-  "uploadFile": "../../../static/assets/Paperclip.svg"
-}
