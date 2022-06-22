@@ -6,7 +6,7 @@ import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
-import validationRules from '../../utils/validationRules';
+import VALIDATION_RULES from '../../utils/validationRules';
 
 export default class ChangePasswordPage extends Block {
   constructor(props: IProps) {
@@ -47,8 +47,8 @@ export default class ChangePasswordPage extends Block {
             name="old_password" 
             title="Old password" 
             type="password"
-            regexp="${validationRules.password.regexp}" 
-            rules="${validationRules.password.rules}" 
+            regexp="${VALIDATION_RULES.password.regexp}" 
+            rules="${VALIDATION_RULES.password.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -56,8 +56,8 @@ export default class ChangePasswordPage extends Block {
             name="new_password" 
             title="New password" 
             type="password"
-            regexp="${validationRules.password.regexp}" 
-            rules="${validationRules.password.rules}" 
+            regexp="${VALIDATION_RULES.password.regexp}" 
+            rules="${VALIDATION_RULES.password.rules}" 
             validated=true
           }}}
           {{{ SettingsItem 
@@ -65,8 +65,8 @@ export default class ChangePasswordPage extends Block {
             name="confirm_password" 
             title="Confirm password" 
             type="password"
-            regexp="${validationRules.password.regexp}" 
-            rules="${validationRules.password.rules}" 
+            regexp="${VALIDATION_RULES.password.regexp}" 
+            rules="${VALIDATION_RULES.password.rules}" 
             validated=true
           }}}
         </form>

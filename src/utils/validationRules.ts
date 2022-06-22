@@ -1,4 +1,4 @@
-const validationRules = {
+const VALIDATION_RULES = {
   first_name: {
     regexp: '^[A-ZА-Я][a-zа-я.-]*$',
     rules: 'The first letter must be uppercase, without spaces and numbers, there are no special characters (only a hyphen is allowed).',
@@ -29,4 +29,4 @@ const validationRules = {
   },
 };
 
-export default validationRules;
+export default VALIDATION_RULES;

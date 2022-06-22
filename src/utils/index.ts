@@ -1,9 +1,9 @@
 import fetch from './fetch';
 import HTTPTransport from './HTTPTransport';
-import validationRules from './validationRules';
+import VALIDATION_RULES from './validationRules';
 
 export default {
-  validationRules,
+  VALIDATION_RULES,
   HTTPTransport,
   fetch,
 };

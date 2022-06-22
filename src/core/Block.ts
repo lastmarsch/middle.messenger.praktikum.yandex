@@ -8,10 +8,6 @@ export interface IProps {
   [prop: string]: any
 }
 
-// interface IMeta {
-//   props: IProps
-// }
-
 export default class Block {
   static EVENTS = {
     INIT: 'init',
@@ -26,8 +22,6 @@ export default class Block {
 
   private _eventBus: () => EventBus;
 
-  // private readonly _meta: IMeta;
-
   public props: IProps;
 
   protected state: any = {};
@@ -37,10 +31,6 @@ export default class Block {
   protected refs: { [key: string]: HTMLElement } = {};
 
   constructor(props: IProps = { }) {
-    // this._meta = {
-    //   props,
-    // };
-
     this.props = this._makePropsProxy(props);
     this.state = this._makePropsProxy(this.state);
 

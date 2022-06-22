@@ -6,7 +6,7 @@ import {
   settingsPath, plusPath, avatarPath, morePath, paperclipPath, sendPath,
 } from '../../const/images';
 import * as chats from '../../data/chats.json';
-import validationRules from '../../utils/validationRules';
+import VALIDATION_RULES from '../../utils/validationRules';
 
 export default class ChatPage extends Block {
   constructor(props: IProps) {
@@ -117,8 +117,8 @@ export default class ChatPage extends Block {
             name="message" 
             type="text" 
             placeholder="Start typing..." 
-            regexp="${validationRules.message.regexp}"               
-            rules="${validationRules.message.rules}" 
+            regexp="${VALIDATION_RULES.message.regexp}"               
+            rules="${VALIDATION_RULES.message.rules}" 
             validated=true
           }}}
           {{{ Button 

@@ -23,9 +23,9 @@ export default class Message extends Block {
         <span class="${styles.message__text}">
           {{ text }}
         </span>
-        <span class="${styles.message__time}">
+        <time class="${styles.message__time}">
           {{ time }}
-        </span>
+        </time>
       </div>
     </div>
     `;
