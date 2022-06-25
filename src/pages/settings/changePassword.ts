@@ -1,14 +1,15 @@
-import { Block } from '../../core';
+import { Block, renderDOM } from '../../core';
 import { IProps } from '../../core/Block';
-import Input from '../../components/input';
 import styles from './settings.module.css';
 import * as user from '../../data/user.json';
 import {
   avatarPath, backPath,
 } from '../../const/images';
 import VALIDATION_RULES from '../../utils/validationRules';
+import ValidatedInput from '../../components/validatedInput';
+import routes from '../../const/routes';
 
-export default class ChangePasswordPage extends Block {
+export default class ChangePasswordPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
@@ -17,22 +18,38 @@ export default class ChangePasswordPage extends Block {
 
       console.log(data);
 
-      (Object.values(this.children) as Input[]).forEach((child) => {
+      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.props.validated
-        || !(child.props.id in data)) { return; }
+        || !(child.validateSelf)
+        || !(child.props.id! in data)) { return; }
 
         // some logic here
         child.validateSelf();
       });
     };
-    super({ ...props, events: { submit: onSubmit } });
+
+    const onClick = (props: IProps) => {
+      if (props.href in routes) { renderDOM(routes[props.href]); }
+    };
+
+    super({
+      ...props,
+      onClick,
+      events: {
+        submit: onSubmit,
+      },
+    });
   }
 
   protected render() {
     return `
     <div class="${styles['app-container']}">
-      {{{ Link href="/chat" class="${styles['side-button']}" img="${backPath}" }}}
+      {{{ Link 
+        href="/chat" 
+        class="${styles['side-button']}" 
+        img="${backPath}" 
+        onClick=onClick
+      }}}
       <div class="${styles['main-area']}">
         <div class="${styles['main-area__header']}">
           <label for="uploadAvatar" class="${styles['main-area__icon']}">
@@ -41,7 +58,7 @@ export default class ChangePasswordPage extends Block {
           </label>
           <span class="${styles['main-area__username']}">${user.display_name}</span>
         </div>
-        <form id="settings" class="${styles['main-area__list']}">
+        <form id="changePassword" class="${styles['main-area__list']}">
           {{{ SettingsItem 
             id="old_password" 
             name="old_password" 
@@ -49,7 +66,6 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
-            validated=true
           }}}
           {{{ SettingsItem 
             id="new_password" 
@@ -58,7 +74,6 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
-            validated=true
           }}}
           {{{ SettingsItem 
             id="confirm_password" 
@@ -67,10 +82,14 @@ export default class ChangePasswordPage extends Block {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
-            validated=true
           }}}
         </form>
-        {{{ Button id="settings" form="settings" class="${styles['main-area__submit']}" type="submit" innerText="Save changes"}}}
+        {{{ Button 
+          form="changePassword" 
+          class="${styles['main-area__submit']}" 
+          type="submit" 
+          innerText="Save changes"
+        }}}
       </div>
     </div>    
     `;

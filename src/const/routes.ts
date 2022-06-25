@@ -1,12 +1,14 @@
 import { Block } from '../core';
+import { IProps } from '../core/Block';
 import { SignInPage, SignUpPage } from '../pages/auth';
 import ChatPage from '../pages/chat';
 import { Page404, Page500 } from '../pages/error';
+// eslint-disable-next-line import/no-cycle
 import HomePage from '../pages/home';
 import { ChangeInfoPage, ChangePasswordPage, ProfilePage } from '../pages/settings';
 
 interface IRoutes {
-  [route: string]: typeof Block
+  [route: string]: typeof Block<IProps>
 }
 
 const routes: IRoutes = {

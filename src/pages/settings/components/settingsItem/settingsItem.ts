@@ -1,21 +1,11 @@
-import Input from '../../../../components/input';
+import { InputProps } from '../../../../components/input/input';
+import ValidatedInput from '../../../../components/validatedInput';
 import styles from './settingsItem.module.css';
 
-interface SettingsItemProps {
-  title?: string,
-  type?: string,
-  name?: string,
-  id?: string,
-  value?: string,
-  placeholder?: string,
-  rules?: string,
-  invalidClassName?: string,
-}
-
-export default class SettingsItem extends Input {
+export default class SettingsItem extends ValidatedInput {
   public static componentName = 'SettingsItem';
 
-  constructor(props: SettingsItemProps) {
+  constructor(props: InputProps) {
     super({ ...props });
 
     this.setProps({ invalidClassName: styles.invalid });

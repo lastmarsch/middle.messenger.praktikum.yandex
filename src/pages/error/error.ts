@@ -1,14 +1,20 @@
-import { Block } from '../../core';
+import routes from '../../const/routes';
+import { Block, renderDOM } from '../../core';
+import { IProps } from '../../core/Block';
 import styles from './error.module.css';
 
-interface ErrorProps {
+interface ErrorProps extends IProps {
   code?: string,
   text?: string,
 }
 
-export default class ErrorPage extends Block {
+export default class ErrorPage extends Block<IProps> {
   constructor(props: ErrorProps) {
-    super({ ...props });
+    const onClick = (props: IProps) => {
+      if (props.href in routes) { renderDOM(routes[props.href]); }
+    };
+
+    super({ ...props, onClick });
   }
 
   protected render() {
@@ -24,6 +30,7 @@ export default class ErrorPage extends Block {
           href="/chat" 
           class="${styles.error__link}" 
           text="Back to chats" 
+          onClick=onClick
         }}}
       </div>
     </div>`;

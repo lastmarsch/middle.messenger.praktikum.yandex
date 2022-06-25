@@ -1,20 +1,27 @@
 import { Block } from '../../core';
+import { IProps } from '../../core/Block';
 // import styles from './button.module.css';
 
-interface ButtonProps {
-  type?: string,
+interface ButtonProps extends IProps {
+  type?: 'button' | 'reset' | 'submit',
   form?: string,
   id?: string,
   class?: string,
   innerText?: string,
   img?: string,
+  onClick?: (...args: any[]) => void
 }
 
-export default class Button extends Block {
+export default class Button extends Block<ButtonProps> {
   public static componentName = 'Button';
 
-  constructor(props: ButtonProps) {
-    super({ ...props });
+  constructor({ onClick, ...props }: ButtonProps) {
+    super({
+      ...props,
+      events: {
+        click: onClick!,
+      },
+    });
   }
 
   protected render(): string {

@@ -1,7 +1,8 @@
 import { Block } from '../../../../core';
+import { IProps } from '../../../../core/Block';
 import styles from './chatListItem.module.css';
 
-interface ChatListItemProps {
+interface ChatListItemProps extends IProps {
   opened?: boolean,
   username?: string,
   lastMessage?: string,
@@ -9,7 +10,7 @@ interface ChatListItemProps {
   unreadMessagesCount?: number,
 }
 
-export default class ChatListItem extends Block {
+export default class ChatListItem extends Block<IProps> {
   public static componentName = 'ChatListItem';
 
   constructor(props: ChatListItemProps) {
