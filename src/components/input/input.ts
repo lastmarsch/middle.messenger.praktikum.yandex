@@ -1,10 +1,11 @@
 import { Block } from '../../core';
+import { IProps } from '../../core/Block';
 import styles from './input.module.css';
 
-interface InputProps {
+export interface InputProps extends IProps {
   title?: string,
   id?: string,
-  type?: string,
+  type?: 'button' | 'checkbox' | 'file' | 'hidden' | 'image' | 'password' | 'radio' | 'reset' | 'submit' | 'text',
   name?: string,
   value?: string,
   placeholder?: string,
@@ -13,50 +14,21 @@ interface InputProps {
   regexp?: string,
   rules?: string,
   invalidClassName?: string,
-  validated?: boolean
+  onFocus?: (...args: any[]) => void,
+  onBlur?: (...args: any[]) => void,
 }
 
-export default class Input extends Block {
+export default class Input extends Block<InputProps> {
   public static componentName = 'Input';
 
-  constructor(props: InputProps) {
+  constructor({ onFocus, onBlur, ...props }: InputProps) {
     super({
       ...props,
-      invalidClassName: styles.invalid,
+      events: {
+        focus: onFocus!,
+        blur: onBlur!,
+      },
     });
-  }
-
-  componentDidMount() {
-    this.addEvents();
-  }
-
-  addEvents() {
-    const input = this._element.querySelector(`#${this.props.id}`);
-    if (!input) { return; }
-
-    input.addEventListener('focus', this.validateSelf.bind(this));
-    input.addEventListener('blur', this.validateSelf.bind(this));
-  }
-
-  removeEvents() {
-    const input = this._element.querySelector(`#${this.props.id}`);
-    if (!input) { return; }
-
-    input.removeEventListener('focus', this.validateSelf.bind(this));
-    input.addEventListener('blur', this.validateSelf.bind(this));
-  }
-
-  validateSelf() {
-    const input: HTMLInputElement = this._element.querySelector(`#${this.props.id}`)!;
-    if (!input && !this.props.regexp) { return; }
-
-    const text = input.value;
-    const isValid = RegExp(this.props.regexp).test(text);
-    if (isValid) {
-      this._element.classList.remove(this.props.invalidClassName);
-    } else { this._element.classList.add(this.props.invalidClassName); }
-
-    // console.log(`${this.props.id}: ${isValid}`);
   }
 
   protected render(): string {
@@ -91,9 +63,6 @@ export default class Input extends Block {
         readonly
         {{/if}}
       >
-
-      <!-- Error  -->
-      <span class="${styles['input-group__error']}">{{ rules }}</span>
     </div>
     `;
   }

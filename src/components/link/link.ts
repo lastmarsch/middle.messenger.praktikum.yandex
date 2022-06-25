@@ -1,23 +1,28 @@
-import { Block, renderDOM } from '../../core';
+import { Block } from '../../core';
+import { IProps } from '../../core/Block';
 // import styles from './link.module.css';
-import routes from '../../const/routes';
 
-interface LinkProps {
+interface LinkProps extends IProps {
   href: string,
   class?: string,
   img?: string,
   text?: string,
+  onClick?: (...args: any[]) => void
 }
 
-export default class Link extends Block {
+export default class Link extends Block<IProps> {
   public static componentName = 'Link';
 
-  constructor(props: LinkProps) {
-    const onClick = (e: MouseEvent) => {
-      e.preventDefault();
-      if (props.href in routes) { renderDOM(routes[props.href]); }
-    };
-    super({ ...props, events: { click: onClick } });
+  constructor({ onClick, ...props }: LinkProps) {
+    super({ ...props });
+    this.setProps({
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          onClick!(props);
+        },
+      },
+    });
   }
 
   protected render(): string {

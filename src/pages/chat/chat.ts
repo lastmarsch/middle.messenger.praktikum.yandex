@@ -1,14 +1,15 @@
-import { Block } from '../../core';
+import { Block, renderDOM } from '../../core';
 import { IProps } from '../../core/Block';
-import Input from '../../components/input';
 import styles from './chat.module.css';
 import {
   settingsPath, plusPath, avatarPath, morePath, paperclipPath, sendPath,
 } from '../../const/images';
 import * as chats from '../../data/chats.json';
 import VALIDATION_RULES from '../../utils/validationRules';
+import ValidatedInput from '../../components/validatedInput';
+import routes from '../../const/routes';
 
-export default class ChatPage extends Block {
+export default class ChatPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
@@ -17,16 +18,28 @@ export default class ChatPage extends Block {
 
       console.log(data);
 
-      (Object.values(this.children) as Input[]).forEach((child) => {
+      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.props.validated
-        || !(child.props.id in data)) { return; }
+        || !(child.validateSelf)
+        || !(child.props.id! in data)) { return; }
 
         // some logic here
         child.validateSelf();
       });
     };
-    super({ ...props, currentConvoId: 1, events: { submit: onSubmit } });
+
+    const onClick = (props: IProps) => {
+      if (props.href in routes) { renderDOM(routes[props.href]); }
+    };
+
+    super({
+      ...props,
+      onClick,
+      currentConvoId: 1,
+      events: {
+        submit: onSubmit,
+      },
+    });
   }
 
   protected render() {
@@ -37,6 +50,7 @@ export default class ChatPage extends Block {
           {{{ Link 
             href="/profile" 
             img="${settingsPath}" 
+            onClick=onClick
           }}}
           {{{ Input 
             id="search" 
@@ -112,17 +126,15 @@ export default class ChatPage extends Block {
         </div>
         <form id="send" class="${styles['main__edit-msg']}">
           {{{ Link href="#" class="" img="${paperclipPath}" }}}
-          {{{ Input 
+          {{{ ValidatedInput 
             id="message" 
             name="message" 
             type="text" 
             placeholder="Start typing..." 
             regexp="${VALIDATION_RULES.message.regexp}"               
             rules="${VALIDATION_RULES.message.rules}" 
-            validated=true
           }}}
           {{{ Button 
-            id="submit" 
             type="submit" 
             form="send" 
             class="${styles['edit-msg__button']}" 
