@@ -1,13 +1,14 @@
 import { Block } from '../../../../core';
+import { IProps } from '../../../../core/Block';
 import styles from './message.module.css';
 
-interface MessageProps {
+interface MessageProps extends IProps {
   author?: number,
   text?: string,
   time?: string,
 }
 
-export default class Message extends Block {
+export default class Message extends Block<IProps> {
   public static componentName = 'Message';
 
   constructor(props: MessageProps) {
