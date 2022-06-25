@@ -1,8 +1,21 @@
-import { Block } from '../../core';
+import { Block, renderDOM } from '../../core';
+import { IProps } from '../../core/Block';
 import styles from './home.module.css';
-import * as routes from '../../data/routes.json';
+import * as paths from '../../data/routes.json';
+import routes from '../../const/routes';
 
-export default class HomePage extends Block {
+export default class HomePage extends Block<IProps> {
+  constructor(props: IProps) {
+    const onClick = (props: IProps) => {
+      if (props.href in routes) { renderDOM(routes[props.href]); }
+    };
+
+    super({
+      ...props,
+      onClick,
+    });
+  }
+
   protected render() {
     let buffHtml = `
     <div class="${styles['app-container']}">
@@ -11,12 +24,13 @@ export default class HomePage extends Block {
             Список страниц
         </span>`;
 
-    Object.values(routes.pages).forEach((page) => {
+    Object.values(paths.pages).forEach((page) => {
       buffHtml += `
         {{{ Link 
           href="${page.href}"
           class="${styles.routes__link}" 
-          text="${page.title}" 
+          text="${page.title}"
+          onClick=onClick 
         }}}`;
     });
     buffHtml += '</div></div>';

@@ -8,7 +8,7 @@ export interface IProps {
   [prop: string]: any
 }
 
-export default class Block {
+export default class Block<Props extends IProps> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -22,16 +22,16 @@ export default class Block {
 
   private _eventBus: () => EventBus;
 
-  public props: IProps;
+  public props: Props;
 
   protected state: any = {};
 
-  protected children: Block[] = [];
+  protected children: Block<Props>[] = [];
 
   protected refs: { [key: string]: HTMLElement } = {};
 
-  constructor(props: IProps = { }) {
-    this.props = this._makePropsProxy(props);
+  constructor(props: Props) {
+    this.props = this._makePropsProxy(props ?? {});
     this.state = this._makePropsProxy(this.state);
 
     const eventBus = new EventBus();
@@ -85,14 +85,14 @@ export default class Block {
     this._eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: IProps, newProps: IProps) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) { this._eventBus().emit(Block.EVENTS.FLOW_RENDER); }
   }
 
   // For override
   // eslint-disable-next-line class-methods-use-this
-  componentDidUpdate(oldProps: IProps, newProps: IProps) {
+  componentDidUpdate(oldProps: Props, newProps: Props) {
     // eslint-disable-next-line no-restricted-syntax
     for (const key of Object.keys(newProps)) {
       if (newProps[key] !== oldProps[key]) {
@@ -103,7 +103,7 @@ export default class Block {
     return false;
   }
 
-  setProps = (nextProps: IProps) => {
+  setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
     }
@@ -169,7 +169,7 @@ export default class Block {
   private _addEvents() {
     this.addEvents();
 
-    const { events } = this.props as IProps;
+    const { events } = this.props as Props;
 
     if (!events) {
       return;
@@ -187,7 +187,7 @@ export default class Block {
   private _removeEvents() {
     this.removeEvents();
 
-    const { events } = this.props as IProps;
+    const { events } = this.props as Props;
 
     if (!events || !this._element) {
       return;
@@ -203,7 +203,7 @@ export default class Block {
   protected removeEvents() {}
 
   // eslint-disable-next-line class-methods-use-this
-  private _makePropsProxy(props: IProps) {
+  private _makePropsProxy(props: Props) {
     return new Proxy(props, {
       get(target, prop: string) {
         if (prop.indexOf('_') === 0) {
@@ -217,7 +217,7 @@ export default class Block {
           throw new Error('Нет прав');
         }
         // eslint-disable-next-line no-param-reassign
-        target[prop] = value;
+        target[prop as keyof Props] = value;
         return true;
       },
       deleteProperty() {

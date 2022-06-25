@@ -1,10 +1,10 @@
 import Handlebars, { HelperOptions } from 'handlebars';
-import Block from './Block';
+import Block, { IProps } from './Block';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface BlockConstructable<Props = any> {
   componentName: string,
-  new(props: Props): Block
+  new(props: Props): Block<IProps>
 }
 
 export default function registerComponent<Props extends any>(Component: BlockConstructable) {
@@ -23,13 +23,6 @@ export default function registerComponent<Props extends any>(Component: BlockCon
       }
 
       const { children, refs } = data.root;
-
-      (Object.keys(hash) as any).forEach((key: keyof Props) => {
-        if (this[key]) {
-          // eslint-disable-next-line no-param-reassign
-          hash[key] = hash[key].replace(new RegExp(`{{${String(key)}}}`, 'i'), this[key]);
-        }
-      });
 
       const component = new Component(hash);
 

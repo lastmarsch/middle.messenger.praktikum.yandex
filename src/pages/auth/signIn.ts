@@ -1,10 +1,11 @@
-import Input from '../../components/input';
-import { Block } from '../../core';
+import ValidatedInput from '../../components/validatedInput';
+import routes from '../../const/routes';
+import { Block, renderDOM } from '../../core';
 import { IProps } from '../../core/Block';
 import VALIDATION_RULES from '../../utils/validationRules';
 import styles from './auth.module.css';
 
-export default class SignInPage extends Block {
+export default class SignInPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
@@ -13,16 +14,27 @@ export default class SignInPage extends Block {
 
       console.log(data);
 
-      (Object.values(this.children) as Input[]).forEach((child) => {
+      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
         if (!document.body.contains(child.element)
-        || !child.props.validated
-        || !(child.props.id in data)) { return; }
+        || !(child.validateSelf)
+        || !(child.props.id! in data)) { return; }
 
         // some logic here
         child.validateSelf();
       });
     };
-    super({ ...props, events: { submit: onSubmit } });
+
+    const onClick = (props: IProps) => {
+      if (props.href in routes) { renderDOM(routes[props.href]); }
+    };
+
+    super({
+      ...props,
+      onClick,
+      events: {
+        submit: onSubmit,
+      },
+    });
   }
 
   protected render() {
@@ -34,29 +46,37 @@ export default class SignInPage extends Block {
         </span>
 
         <form id="signin" action="" class="${styles.container__form}">
-          {{{ Input 
+          {{{ ValidatedInput 
             id="login" 
             name="login" 
             title="Username" 
             type="text" 
             regexp="${VALIDATION_RULES.login.regexp}" 
             rules="${VALIDATION_RULES.login.rules}" 
-            validated=true
           }}}
-          {{{ Input 
+          {{{ ValidatedInput 
             id="password" 
             name="password" 
             title="Password" 
             type="password" 
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
-            validated=true
           }}}
         </form>
 
         <div class="${styles.container__form}">
-          {{{ Button id="submit" form="signin" type="submit" class="${styles.container__button}" innerText="Sign in" }}}
-          {{{ Link href="/signUp" class="${styles.container__link}" text="Sign up" }}}
+          {{{ Button 
+            form="signin" 
+            type="submit" 
+            class="${styles.container__button}" 
+            innerText="Sign in" 
+          }}}
+          {{{ Link 
+            href="/signUp" 
+            class="${styles.container__link}" 
+            text="Sign up" 
+            onClick=onClick
+          }}}
         </div>
       </div>    
     </div> 
