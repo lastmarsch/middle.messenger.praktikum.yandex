@@ -1,8 +1,7 @@
-import { Block } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
 // import styles from './button.module.css';
 
-interface ButtonProps extends IProps {
+export interface ButtonProps extends IProps {
   type?: 'button' | 'reset' | 'submit',
   form?: string,
   id?: string,
@@ -12,7 +11,7 @@ interface ButtonProps extends IProps {
   onClick?: (...args: any[]) => void
 }
 
-export default class Button extends Block<ButtonProps> {
+export class Button extends Block<ButtonProps> {
   public static componentName = 'Button';
 
   constructor({ onClick, ...props }: ButtonProps) {

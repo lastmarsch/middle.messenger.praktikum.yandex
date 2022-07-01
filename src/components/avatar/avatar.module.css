@@ -1,0 +1,27 @@
+@import "../../app.css";
+
+.icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background-color: $light-violet;
+  text-decoration: none;
+  overflow: hidden;
+  color: $cool-dark;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  img {
+    width: 102px;
+    height: 102px;
+  }
+}

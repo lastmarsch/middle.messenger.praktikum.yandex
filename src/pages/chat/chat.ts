@@ -1,15 +1,15 @@
-import { Block, renderDOM } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
 import styles from './chat.module.css';
 import {
-  settingsPath, plusPath, avatarPath, morePath, paperclipPath, sendPath,
+  settingsPath, plusPath, morePath, paperclipPath, sendPath,
 } from '../../const/images';
-import * as chats from '../../data/chats.json';
-import VALIDATION_RULES from '../../utils/validationRules';
-import ValidatedInput from '../../components/validatedInput';
-import routes from '../../const/routes';
+import {
+  formatDateTime, VALIDATION_RULES, withRouter,
+} from '../../utils';
+import { authService, chatService } from '../../services';
+import { ValidatedInput } from '../../components';
 
-export default class ChatPage extends Block<IProps> {
+class ChatPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
@@ -18,28 +18,106 @@ export default class ChatPage extends Block<IProps> {
 
       console.log(data);
 
+      let isValid = false;
       (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
         if (!document.body.contains(child.element)
         || !(child.validateSelf)
         || !(child.props.id! in data)) { return; }
 
         // some logic here
-        child.validateSelf();
+        isValid = child.validateSelf();
       });
+
+      if (isValid) { chatService.sendMessage(data); }
     };
 
-    const onClick = (props: IProps) => {
-      if (props.href in routes) { renderDOM(routes[props.href]); }
+    // manage modal & context menu visibility
+    const showCreateChatModal = () => {
+      const modal = Object.values(this.children).find((item) => item.props.id === 'createChatModal');
+      if (modal) { modal.props.toggleModal(); }
+    };
+
+    const toggleChatMenu = () => {
+      const contextMenu = Object.values(this.children).find((item) => item.props.id === 'chatMenu');
+      if (contextMenu) contextMenu.props.toggleContextMenu();
+    };
+
+    // chats
+    const getChats = () => {
+      chatService.getChats()
+        .then((r) => {
+          this.setProps({ chats: r });
+        })
+        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+    };
+
+    const createChatWithUser = (data) => {
+      chatService.createChatWithUser(data, this.props.user.id)
+        .then((r) => getChats())
+        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+    };
+
+    const leaveChat = () => {
+      chatService.leaveChat({
+        users: [this.props.user.id],
+        chatId: this.props.currentConvoId,
+      })
+        .then((r) => {
+          this.setProps({ currentConvoId: null });
+          getChats();
+        })
+        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+    };
+
+    const deleteChat = () => {
+      chatService.deleteChat({ chatId: this.props.currentConvoId })
+        .then((r) => {
+          this.setProps({ currentConvoId: null });
+          getChats();
+        })
+        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+    };
+
+    const onOpenChat = (e: CustomEvent) => {
+      const chatId = +e.detail;
+      chatService.connectToWS(
+        { chatId },
+        this.props.user.id,
+        ((messages) => { this.setProps({ messages }); }),
+      );
+      this.setProps({
+        currentConvoId: chatId,
+      });
     };
 
     super({
       ...props,
-      onClick,
-      currentConvoId: 1,
+      showCreateChatModal,
+      toggleChatMenu,
+      createChatWithUser,
+      getChats,
+      leaveChat,
+      deleteChat,
+      chats: [],
+      currentConvoId: null,
+      messages: [],
+      user: null,
+      goToSettings: () => this.props.router.go('/settings'),
       events: {
         submit: onSubmit,
+        openChat: onOpenChat,
       },
     });
+  }
+
+  componentDidMount(): void {
+    authService.getCurrentUser()
+      .then((user) => {
+        this.setProps({ user });
+      })
+      .catch((e) => this.props.router.go('/'));
+
+    this.props.getChats();
   }
 
   protected render() {
@@ -48,9 +126,9 @@ export default class ChatPage extends Block<IProps> {
       <div class="${styles['side-menu']}">
         <div class="${styles['side-menu__panel']}">
           {{{ Link 
-            href="/profile" 
+            href="/settings" 
             img="${settingsPath}" 
-            onClick=onClick
+            onClick=goToSettings
           }}}
           {{{ Input 
             id="search" 
@@ -59,91 +137,156 @@ export default class ChatPage extends Block<IProps> {
             placeholder="Search..."
           }}} 
           {{{ Link 
-            href="#" 
+            href="" 
             img="${plusPath}" 
+            onClick=showCreateChatModal
           }}}
         </div>
 
-        <div class="${styles['side-menu__list']}">`;
+        <div class="${styles['side-menu__list']}">
+        `;
 
-    chats.list.forEach((user: {
-      id: number,
-      lastOnline: string,
-      messages: Array<{ author: number, text: string, time: string }>
-      name: string,
-      opened: boolean,
-      unreadMessagesCount: number
-    }) => {
+    this.props.chats.forEach((chat: Chat) => {
       buffHtml += `
-        {{{ ChatListItem
-            username="${user.name}"
-            lastMessage="${user.messages.slice(-1)[0].text}"
-            lastOnline="${user.lastOnline}"
-            unreadMessagesCount=${user.unreadMessagesCount}
-            opened=${user.opened}
-        }}}`;
+      {{{ ChatListItem
+        chatId=${chat.id}
+        username="${chat.title}"
+        lastMessage="${chat.last_message ? chat.last_message.content : ''}"
+        lastOnline="${chat.last_message ? formatDateTime(chat.last_message.time) : ''}"
+        unreadMessagesCount=${chat.unread_count}
+        opened=false
+      }}}`;
     });
 
     buffHtml += `
       </div>
     </div>
+    
+    {{#if currentConvoId}}`;
+
+    const currentChat = this.props.chats.find(
+      (chat: Chat) => chat.id === this.props.currentConvoId,
+    );
+
+    buffHtml += `
     <div class="${styles.main}">
       <div class="${styles.main__panel}">
         <div class="${styles.panel__left}">
           <div class="${styles.panel__icon}">
-            <img src="${avatarPath}" />
+            <img src="" />
           </div>
           <div class="${styles['panel__user-info']}">
             <span class="${styles['user-info__username']}"
-              >${chats.list[this.props.currentConvoId].name}</span
-            >
+              >${currentChat ? currentChat.title : ''}</span>
             <span class="${styles['user-info__last-online']}"
-              >Last online:
-              ${chats.list[this.props.currentConvoId].lastOnline}</span
-            >
+              >Last online: <time> </time> </span>
           </div>
         </div>
-        <a href="#">
-          <img src="${morePath}" />
-        </a>
+        {{{ Link 
+          href="" 
+          img="${morePath}" 
+          onClick=toggleChatMenu
+        }}}
+        {{{ ContextMenu
+          id="chatMenu"
+          closed=true
+          leaveChat=leaveChat
+          deleteChat=deleteChat
+          yield='
+          {{{ Link
+            href=""
+            text="Leave chat" 
+            onClick=leaveChat
+          }}}`;
+
+    if (currentChat && currentChat.created_by === this.props.user.id) {
+      buffHtml += `,
+          {{{ Link
+            href=""
+            text="Delete chat" 
+            onClick=deleteChat
+          }}}`;
+    }
+
+    buffHtml += `'
+        }}}
       </div>
       <div class="${styles.main__msgs}">`;
 
-    chats.list[this.props.currentConvoId].messages.forEach((msg: {
-      author: number,
-      text: string,
-      time: string
-    }) => {
+    this.props.messages.forEach((msg: Message) => {
       buffHtml += `
-        {{{ Message 
-            author=${msg.author}
-            text="${msg.text}"
-            time="${msg.time}"
+        {{{ Message
+            isAuthor=${msg.user_id === this.props.user.id}
+            text="${msg.content}"
+            time="${formatDateTime(msg.time)}"
         }}}`;
     });
 
     buffHtml += `
-        </div>
-        <form id="send" class="${styles['main__edit-msg']}">
-          {{{ Link href="#" class="" img="${paperclipPath}" }}}
-          {{{ ValidatedInput 
-            id="message" 
-            name="message" 
-            type="text" 
-            placeholder="Start typing..." 
-            regexp="${VALIDATION_RULES.message.regexp}"               
-            rules="${VALIDATION_RULES.message.rules}" 
-          }}}
-          {{{ Button 
-            type="submit" 
-            form="send" 
-            class="${styles['edit-msg__button']}" 
-            innerText="Send message" 
-            img="${sendPath}" }}}
-        </form>
+      </div>
+      <form id="send" class="${styles['main__edit-msg']}">
+        {{{ Link 
+          href="#"             
+          class="" 
+          img="${paperclipPath}" 
+        }}}
+        {{{ ValidatedInput 
+          id="message" 
+          name="message" 
+          type="text" 
+          placeholder="Start typing..." 
+          regexp="${VALIDATION_RULES.message.regexp}"               
+          rules="${VALIDATION_RULES.message.rules}" 
+        }}}
+        {{{ Button 
+          type="submit" 
+          form="send" 
+          class="${styles['edit-msg__button']}" 
+          innerText="Send message" 
+          img="${sendPath}" 
+        }}}
+      </form>
     </div>
-    </div>`;
+
+    {{else}}
+
+    <div class="${styles.empty}">
+      <span>Select a chat from the chat list or create a new one.</span>
+    </div>
+
+    {{/if}}
+
+    {{{Modal
+      id="createChatModal"
+      title="Create a chat"
+      formId="createChat"
+      closed=true
+      yield='
+        {{{ Input 
+          id="title" 
+          name="title" 
+          type="text" 
+          title="Title"
+        }}}
+        {{{ Input 
+          id="user" 
+          name="user" 
+          type="text" 
+          title="User with ID"
+        }}}
+        {{{ Button 
+          type="submit" 
+          form="createChat" 
+          innerText="Create" 
+        }}}
+      '
+      onSubmit=createChatWithUser
+    }}}
+    </div>    
+    `;
 
     return buffHtml;
   }
 }
+
+export default withRouter(ChatPage);

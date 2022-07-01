@@ -1,4 +1,4 @@
-enum METHODS {
+export enum METHODS {
   GET = 'GET',
   PUT = 'PUT',
   POST = 'POST',
@@ -31,10 +31,10 @@ export interface IOptions {
   retries?: number;
   timeout?: number;
   headers?: { [key: string]: string };
-  data?: { [key: string]: number | string | object };
+  data?: { [key: string]: number | string | object } | FormData;
 }
 
-class HTTPTransport {
+export class HTTPTransport {
   get = (url: string, options: IOptions = { method: METHODS.GET, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.GET },
@@ -69,7 +69,7 @@ class HTTPTransport {
       method: METHODS.GET,
     },
     timeout = 5000,
-  ) {
+  ) : Promise<FetchResponse> {
     const { method, headers, data } = options;
 
     return new Promise((resolve, reject) => {
@@ -79,13 +79,18 @@ class HTTPTransport {
 
       const xhr = new XMLHttpRequest();
 
+      xhr.open(method, url + queryStringify(data));
+
       if (headers) {
         for (const [key, value] of Object.entries(headers)) {
           xhr.setRequestHeader(key, value);
         }
+      } else {
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
       }
 
-      xhr.open(method, url + queryStringify(data));
+      xhr.withCredentials = true;
 
       xhr.onload = () => resolve(xhr);
 
@@ -95,11 +100,11 @@ class HTTPTransport {
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (headers && headers!['Content-Type'] === 'multipart/form-data') {
+        xhr.send(data);
       } else {
         xhr.send(JSON.stringify(data));
       }
     });
   }
 }
-
-export default HTTPTransport;

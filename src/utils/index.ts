@@ -1,9 +1,14 @@
 import fetch from './fetch';
-import HTTPTransport from './HTTPTransport';
+import formatDateTime from './formatDateTime';
+import { HTTPTransport, METHODS } from './HTTPTransport';
 import VALIDATION_RULES from './validationRules';
+import withRouter from './withRouter';
 
-export default {
+export {
   VALIDATION_RULES,
   HTTPTransport,
+  METHODS,
   fetch,
+  withRouter,
+  formatDateTime,
 };

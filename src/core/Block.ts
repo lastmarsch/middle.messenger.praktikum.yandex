@@ -8,13 +8,15 @@ export interface IProps {
   [prop: string]: any
 }
 
-export default class Block<Props extends IProps> {
+export class Block<Props extends IProps> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
   } as const;
+
+  public static componentName?: string;
 
   public id = nanoid(8);
 
@@ -62,13 +64,13 @@ export default class Block<Props extends IProps> {
   }
 
   getContent() {
-    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
-          this._eventBus().emit(Block.EVENTS.FLOW_CDM);
-        }
-      }, 100);
-    }
+    // if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+    //   setTimeout(() => {
+    //     if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+    //       this._eventBus().emit(Block.EVENTS.FLOW_CDM);
+    //     }
+    //   }, 100);
+    // }
     return this.element;
   }
 
@@ -137,6 +139,9 @@ export default class Block<Props extends IProps> {
 
   private _compile(): DocumentFragment {
     const fragment = document.createElement('template');
+
+    // remove elements that are not in DOM
+    this.children = this.children.filter((child) => document.body.contains(child.element));
 
     const template = Handlebars.compile(this.render());
     fragment.innerHTML = template({
@@ -230,7 +235,7 @@ export default class Block<Props extends IProps> {
   }
 
   show() {
-    this.getContent().style.display = 'block';
+    this.getContent().style.display = 'flex';
   }
 
   hide() {
