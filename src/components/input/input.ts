@@ -1,5 +1,4 @@
-import { Block } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
 import styles from './input.module.css';
 
 export interface InputProps extends IProps {
@@ -18,7 +17,7 @@ export interface InputProps extends IProps {
   onBlur?: (...args: any[]) => void,
 }
 
-export default class Input extends Block<InputProps> {
+export class Input extends Block<InputProps> {
   public static componentName = 'Input';
 
   constructor({ onFocus, onBlur, ...props }: InputProps) {

@@ -20,8 +20,8 @@
   }
 
   &__icon {
-    width: 55px;
-    height: 55px;
+    min-width: 55px;
+    min-height: 55px;
     flex-grow: 0;
     background-color: white;
     border-radius: 55px;
@@ -36,7 +36,7 @@
     align-items: stretch;
     gap: 5px;
     padding: 0;
-    width: 325px;
+    max-width: 290px;
 
     .text-group__username {
       @mixin Medium-bold-text;
@@ -55,7 +55,6 @@
   }
 
   &__msg-info-group {
-    width: 24px;
     align-self: stretch;
     flex-grow: 0;
     display: flex;
@@ -64,6 +63,7 @@
     align-items: flex-end;
     gap: 13px;
     padding: 0;
+    min-width: 60px;
 
     .msg-info-group__last-online {
       @mixin Small-text;

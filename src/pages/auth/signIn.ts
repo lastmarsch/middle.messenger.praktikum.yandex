@@ -1,40 +1,64 @@
-import ValidatedInput from '../../components/validatedInput';
-import routes from '../../const/routes';
-import { Block, renderDOM } from '../../core';
-import { IProps } from '../../core/Block';
-import VALIDATION_RULES from '../../utils/validationRules';
+import { ValidatedInput } from '../../components';
+import { Block, IProps } from '../../core';
+import { authService } from '../../services';
+import { VALIDATION_RULES, withRouter } from '../../utils';
 import styles from './auth.module.css';
 
-export default class SignInPage extends Block<IProps> {
+class SignInPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
+
       const form = e.target as HTMLFormElement;
       const data = Object.fromEntries(new FormData(form));
 
-      console.log(data);
-
+      let isValid = true;
       (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
         if (!document.body.contains(child.element)
         || !(child.validateSelf)
         || !(child.props.id! in data)) { return; }
 
-        // some logic here
-        child.validateSelf();
+        const childValidity = child.validateSelf();
+        isValid = isValid && childValidity;
       });
+
+      console.log(data);
+
+      if (isValid) {
+        authService.signIn(data)
+          .then((r) => {
+            // console.log('authService.signIn', r);
+            this.props.router.go('/messenger');
+          })
+          .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+      }
     };
 
-    const onClick = (props: IProps) => {
-      if (props.href in routes) { renderDOM(routes[props.href]); }
-    };
+    authService.getCurrentUser()
+      .then((r) => {
+        // console.log('authService.getCurrentUser', r);
+        this.props.router.go('/messenger');
+      })
+      .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
 
     super({
       ...props,
-      onClick,
+      goToSignUp: () => this.props.router.go('/sign-up'),
       events: {
         submit: onSubmit,
       },
     });
+  }
+
+  show(): void {
+    authService.getCurrentUser()
+      .then((r) => {
+      // console.log('authService.getCurrentUser', r);
+        this.props.router.go('/messenger');
+      })
+      .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+
+    super.show();
   }
 
   protected render() {
@@ -72,10 +96,10 @@ export default class SignInPage extends Block<IProps> {
             innerText="Sign in" 
           }}}
           {{{ Link 
-            href="/signUp" 
+            href="/sign-up" 
             class="${styles.container__link}" 
             text="Sign up" 
-            onClick=onClick
+            onClick=goToSignUp
           }}}
         </div>
       </div>    
@@ -83,3 +107,5 @@ export default class SignInPage extends Block<IProps> {
     `;
   }
 }
+
+export default withRouter(SignInPage);

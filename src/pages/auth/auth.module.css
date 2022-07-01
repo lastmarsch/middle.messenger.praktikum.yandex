@@ -71,4 +71,10 @@
 
     color: $action-color;
   }
+
+  &__error {
+    @mixin Hint-text;
+
+    color: $error-color;
+  }
 }

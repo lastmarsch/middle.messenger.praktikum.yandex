@@ -1,7 +1,7 @@
-import { IProps } from '../../core/Block';
+import { IProps } from '../../core';
 import ErrorPage from './error';
 
-export default class Page500Page500 extends ErrorPage {
+export default class Page404 extends ErrorPage {
   constructor(props: IProps) {
     super({
       ...props,

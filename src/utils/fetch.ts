@@ -1,6 +1,6 @@
-import HTTPTransport, { IOptions } from './HTTPTransport';
+import { HTTPTransport, IOptions } from './HTTPTransport';
 
 const httpTransport = new HTTPTransport();
-const fetch = (url: string, options: IOptions) => httpTransport.request(url, options);
+const fetch = (url: string, options: IOptions) => httpTransport.request(`${process.env.API_ENDPOINT}/${url}`, options);
 
 export default fetch;
