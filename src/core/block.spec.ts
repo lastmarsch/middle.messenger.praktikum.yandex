@@ -1,10 +1,5 @@
 import { expect } from 'chai';
-import { JSDOM } from 'jsdom';
 import { Block, IProps } from './Block';
-
-const { window } = new JSDOM('<!doctype html><html><body></body></html>');
-global.document = window.document;
-global.navigator = window.navigator;
 
 describe('Block', () => {
   class TestBlock extends Block<IProps> {

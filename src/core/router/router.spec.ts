@@ -4,9 +4,10 @@ import { JSDOM } from 'jsdom';
 import { Block, IProps } from '../Block';
 import Router from './Router';
 
-const { window } = new JSDOM('<!doctype html><html><body></body></html>');
+const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const { window } = jsdom;
+global.window = window;
 global.document = window.document;
-global.navigator = window.navigator;
 
 describe('Router', () => {
   class TestBlock extends Block<IProps> {
