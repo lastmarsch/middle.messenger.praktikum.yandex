@@ -1,7 +1,12 @@
 import { Block, IProps } from './Block';
 
 export default function render(block: Block<IProps>) {
-  const root = document.querySelector('#app');
-  root!.innerHTML = '';
-  root!.appendChild(block.getContent());
+  let root = document.querySelector('#app');
+  if (!root) {
+    root = document.createElement('div');
+    root.id = 'app';
+    document.body.appendChild(root);
+  }
+  root.innerHTML = '';
+  root.appendChild(block.getContent());
 }

@@ -1,13 +1,10 @@
 /* eslint-disable max-classes-per-file */
 import { expect } from 'chai';
-import { JSDOM } from 'jsdom';
+import { mockDocument } from '../../utils';
 import { Block, IProps } from '../Block';
 import Router from './Router';
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
-global.window = window;
-global.document = window.document;
+mockDocument();
 
 describe('Router', () => {
   class TestBlock extends Block<IProps> {

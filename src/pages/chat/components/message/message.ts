@@ -17,7 +17,7 @@ export default class Message extends Block<IProps> {
   protected render(): string {
     let buffHtml = `
       <div class="${styles.message}`;
-    buffHtml += (!this.props.isAuthor) ? ` ${styles['left-align']}` : '';
+    buffHtml += (!this.props.isAuthor) ? ` ${styles.leftAlign}` : '';
     buffHtml += `">
       <div class="${styles.message__container}">
         <span class="${styles.message__text}">

@@ -1,6 +1,6 @@
 @import "../../app.css";
 
-.input-group {
+.inputGroup {
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
 import { Block, IProps } from '../../core';
 import styles from './settings.module.css';
 import { backPath } from '../../const/images';
-import { withRouter } from '../../utils';
+import { logError, withRouter } from '../../utils';
 import { authService } from '../../services';
 
 class ProfilePage extends Block<IProps> {
@@ -23,44 +23,37 @@ class ProfilePage extends Block<IProps> {
       goToChangePassword: () => this.props.router.go('/settings-password'),
       goToSignIn: () => {
         authService.logout()
-          .then((r) => {
-            // console.log('authService.logout', r);
-            this.props.router.go('/');
-          })
-          .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+          .then(() => this.props.router.go('/'))
+          .catch(logError);
       },
     });
   }
 
   componentDidMount() {
     authService.getCurrentUser()
-      .then((user) => {
-        this.setProps({ user });
-      })
-      .catch((e) => this.props.router.go('/'));
+      .then((user) => this.setProps({ user }))
+      .catch(() => this.props.router.go('/'));
   }
 
   show(): void {
     authService.getCurrentUser()
-      .then((user) => {
-        this.setProps({ user });
-      })
-      .catch((e) => this.props.router.go('/'));
+      .then((user) => this.setProps({ user }))
+      .catch(() => this.props.router.go('/'));
 
     super.show();
   }
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       {{{ Link 
         href="/messenger" 
-        class="${styles['side-button']}" 
+        class="${styles.sideButton}" 
         img="${backPath}" 
         onClick=goToMessenger
       }}}
-      <div class="${styles['main-area']}">
-        <div class="${styles['main-area__header']}">
+      <div class="${styles.mainArea}">
+        <div class="${styles.mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -68,9 +61,9 @@ class ProfilePage extends Block<IProps> {
             edit=false
             onClick=changeAvatar
           }}}
-          <span class="${styles['main-area__username']}">{{ user.display_name }}</span>
+          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <div class="${styles['main-area__list']}">
+        <div class="${styles.mainArea__list}">
           {{{ SettingsItem title="First name" value=user.first_name readonly="true"}}}
           {{{ SettingsItem title="Second name" value=user.second_name readonly="true"}}}
           {{{ SettingsItem title="Display name" value=user.display_name readonly="true"}}}
@@ -78,7 +71,7 @@ class ProfilePage extends Block<IProps> {
           {{{ SettingsItem title="Email" value=user.email readonly="true"}}}
           {{{ SettingsItem title="Phone" value=user.phone readonly="true"}}}
         </div>
-        <div class="${styles['main-area__links']}">
+        <div class="${styles.mainArea__links}">
           {{{ Link 
             href="/settings-info" 
             text="Change profile data"

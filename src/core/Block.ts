@@ -64,13 +64,6 @@ export class Block<Props extends IProps> {
   }
 
   getContent() {
-    // if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-    //   setTimeout(() => {
-    //     if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
-    //       this._eventBus().emit(Block.EVENTS.FLOW_CDM);
-    //     }
-    //   }, 100);
-    // }
     return this.element;
   }
 

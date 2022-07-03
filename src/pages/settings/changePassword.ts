@@ -1,8 +1,9 @@
 import { Block, IProps } from '../../core';
 import styles from './settings.module.css';
 import { backPath } from '../../const/images';
-import { ValidatedInput } from '../../components';
-import { VALIDATION_RULES, withRouter } from '../../utils';
+import {
+  logError, VALIDATION_RULES, withRouter, withValidation,
+} from '../../utils';
 import { authService, userService } from '../../services';
 
 class ChangePasswordPage extends Block<IProps> {
@@ -10,36 +11,25 @@ class ChangePasswordPage extends Block<IProps> {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
-      const data = Object.fromEntries(new FormData(form));
 
-      let isValid = true;
-      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
-        if (!document.body.contains(child.element)
-        || !(child.validateSelf)
-        || !(child.props.id! in data)) { return; }
-
-        const childValidity = child.validateSelf();
-        isValid = isValid && childValidity;
-      });
-
-      console.log(data);
-
-      if (isValid) {
-        const passwordsMatch = data.new_password === data.confirm_password;
-        if (!passwordsMatch) {
+      this.props.validate(form)
+        .then((data) => {
+          const passwordsMatch = data.new_password === data.confirm_password;
+          if (!passwordsMatch) {
           // show error
-          return;
-        }
+            return;
+          }
 
-        const transformedData = {
-          oldPassword: data.old_password as string,
-          newPassword: data.new_password as string,
-        };
+          const transformedData = {
+            oldPassword: data.old_password as string,
+            newPassword: data.new_password as string,
+          };
 
-        userService.password(transformedData)
-          .then((r) => this.props.router.go('/settings'))
-          .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
-      }
+          userService.password(transformedData)
+            .then(() => this.props.router.go('/settings'))
+            .catch(logError);
+        })
+        .catch(logError);
     };
 
     super({
@@ -81,15 +71,15 @@ class ChangePasswordPage extends Block<IProps> {
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       {{{ Link 
         href="/messenger" 
-        class="${styles['side-button']}" 
+        class="${styles.sideButton}" 
         img="${backPath}" 
         onClick=goToMessenger
       }}}
-      <div class="${styles['main-area']}">
-        <div class="${styles['main-area__header']}">
+      <div class="${styles.mainArea}">
+        <div class="${styles.mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -97,9 +87,9 @@ class ChangePasswordPage extends Block<IProps> {
             edit=true
             onClick=changeAvatar
           }}}
-          <span class="${styles['main-area__username']}">{{ user.display_name }}</span>
+          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <form id="changePassword" class="${styles['main-area__list']}">
+        <form id="changePassword" class="${styles.mainArea__list}">
           {{{ SettingsItem 
             id="old_password" 
             name="old_password" 
@@ -107,6 +97,9 @@ class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="new_password" 
@@ -115,6 +108,9 @@ class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="confirm_password" 
@@ -123,11 +119,14 @@ class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
         </form>
         {{{ Button 
           form="changePassword" 
-          class="${styles['main-area__submit']}" 
+          class="${styles.mainArea__submit}" 
           type="submit" 
           innerText="Save changes"
         }}}
@@ -137,4 +136,4 @@ class ChangePasswordPage extends Block<IProps> {
   }
 }
 
-export default withRouter(ChangePasswordPage);
+export default withRouter(withValidation(ChangePasswordPage));

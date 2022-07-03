@@ -1,6 +1,6 @@
 @import "../../app.css";
 
-.app-container {
+.appContainer {
   display: flex;
   padding: 0;
   margin: 0;
@@ -11,7 +11,7 @@
   background-color: white;
 }
 
-.side-menu {
+.sideMenu {
   width: 450px;
   height: 100%;
   align-self: stretch;
@@ -109,20 +109,20 @@
       box-sizing: border-box;
     }
 
-    .panel__user-info {
+    .panel__userInfo {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       padding: 0;
 
-      .user-info__username {
+      .userInfo__username {
         @mixin Medium-bold-text;
 
         color: white;
       }
 
-      .user-info__last-online {
+      .userInfo__lastOnline {
         @mixin Small-text;
 
         color: white;
@@ -142,7 +142,7 @@
     overflow: auto;
   }
 
-  &__edit-msg {
+  &__editMsg {
     /* height: 70px; */
     align-self: stretch;
     flex-grow: 0;
@@ -163,7 +163,7 @@
     }
   }
 
-  .edit-msg__button {
+  .editMsg__button {
     @mixin Bold-ordinary-text;
 
     color: white;

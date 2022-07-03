@@ -23,6 +23,15 @@ export class Input extends Block<InputProps> {
   constructor({ onFocus, onBlur, ...props }: InputProps) {
     super({
       ...props,
+      invalidClassName: styles.invalid,
+      onFocus: (e) => {
+        e.stopPropagation();
+        if (onFocus) onFocus(this);
+      },
+      onBlur: (e) => {
+        e.stopPropagation();
+        if (onBlur) onBlur(this);
+      },
       events: {
         focus: onFocus!,
         blur: onBlur!,
@@ -30,11 +39,27 @@ export class Input extends Block<InputProps> {
     });
   }
 
+  addEvents() {
+    const input = this._element.querySelector(`#${this.props.id}`);
+    if (!input || !this.props.onFocus || !this.props.onBlur) { return; }
+
+    input.addEventListener('focus', this.props.onFocus);
+    input.addEventListener('blur', this.props.onBlur);
+  }
+
+  removeEvents() {
+    const input = this._element.querySelector(`#${this.props.id}`);
+    if (!input || !this.props.onFocus || !this.props.onBlur) { return; }
+
+    input.removeEventListener('focus', this.props.onFocus);
+    input.removeEventListener('blur', this.props.onBlur);
+  }
+
   protected render(): string {
     return `
-    <div class="${styles['input-group']}">
+    <div class="${styles.inputGroup}">
       {{#if title}}
-      <label for="{{ id }}" class="${styles['input-group__label']}">
+      <label for="{{ id }}" class="${styles.inputGroup__label}">
         {{ title }}
       </label>
       {{/if}}
@@ -48,7 +73,7 @@ export class Input extends Block<InputProps> {
         id="{{ id }}"
         {{/if}}
 
-        class="${styles['input-group__input']}"
+        class="${styles.inputGroup__input}"
 
         {{#if value}}
         value="{{ value }}"
@@ -62,6 +87,9 @@ export class Input extends Block<InputProps> {
         readonly
         {{/if}}
       >
+
+      <!-- Error  -->
+      <span class="${styles.inputGroup__error}">{{ rules }}</span>
     </div>
     `;
   }

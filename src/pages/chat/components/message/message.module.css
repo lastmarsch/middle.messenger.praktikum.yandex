@@ -25,11 +25,11 @@
     border-radius: 5px 5px 0;
   }
 
-  &.left-align {
+  &.leftAlign {
     justify-content: flex-start;
   }
 
-  &.left-align &__container {
+  &.leftAlign &__container {
     border-radius: 0 5px 5px;
     background-color: $incoming-msg;
   }

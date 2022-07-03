@@ -1,6 +1,6 @@
 @import "../../app.css";
 
-.app-container {
+.appContainer {
   display: flex;
   padding: 0;
   margin: 0;
@@ -11,7 +11,7 @@
   background-color: white;
 }
 
-.side-button {
+.sideButton {
   width: 50px;
   align-self: stretch;
   flex-grow: 0;
@@ -24,7 +24,7 @@
   background-color: $action-color;
 }
 
-.main-area {
+.mainArea {
   align-self: stretch;
   flex-grow: 1;
   display: flex;

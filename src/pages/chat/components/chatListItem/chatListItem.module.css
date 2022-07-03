@@ -1,6 +1,6 @@
 @import "../../../../app.css";
 
-.chat-item {
+.chatItem {
   height: 75px;
   align-self: stretch;
   flex-grow: 0;
@@ -27,7 +27,7 @@
     border-radius: 55px;
   }
 
-  &__text-group {
+  &__textGroup {
     align-self: stretch;
     flex-grow: 1;
     display: flex;
@@ -38,13 +38,13 @@
     padding: 0;
     max-width: 290px;
 
-    .text-group__username {
+    .textGroup__username {
       @mixin Medium-bold-text;
 
       color: $cool-grey;
     }
 
-    .text-group__last-msg {
+    .textGroup__lastMsg {
       @mixin Small-text;
 
       color: $cool-grey;
@@ -54,7 +54,7 @@
     }
   }
 
-  &__msg-info-group {
+  &__msgInfoGroup {
     align-self: stretch;
     flex-grow: 0;
     display: flex;
@@ -65,13 +65,13 @@
     padding: 0;
     min-width: 60px;
 
-    .msg-info-group__last-online {
+    .msgInfoGroup__lastOnline {
       @mixin Small-text;
 
       color: $cool-grey;
     }
 
-    .msg-info-group__unread-msg {
+    .msgInfoGroup__unreadMsg {
       @mixin Bold-ordinary-text;
 
       font-size: 12px;
@@ -90,7 +90,7 @@
   }
 }
 
-.chat-item.checked {
+.chatItem.checked {
   cursor: pointer;
   background-color: #1000ff14;
   transition: all 0.1s ease-in-out;

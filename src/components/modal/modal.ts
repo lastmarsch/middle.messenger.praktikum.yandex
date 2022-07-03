@@ -30,9 +30,7 @@ export class Modal extends Block<ModalProps> {
           e.stopPropagation();
 
           const formData = Object.fromEntries(new FormData(e.target));
-          console.log(formData);
 
-          // do smth
           if (formData) { onSubmit!(formData); }
 
           this.props.toggleModal();

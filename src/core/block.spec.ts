@@ -1,5 +1,8 @@
 import { expect } from 'chai';
+import { mockDocument } from '../utils';
 import { Block, IProps } from './Block';
+
+mockDocument();
 
 describe('Block', () => {
   class TestBlock extends Block<IProps> {
@@ -7,15 +10,15 @@ describe('Block', () => {
       return `<div id="${this.props.id}">Test</div>`;
     }
   }
+
+  const id = 'test';
+  const block = new TestBlock({ id });
+
   it('Should store props', () => {
-    const id = 'test';
-    const block = new TestBlock({ id });
     expect(block.props.id).to.eq(id);
   });
 
   it('Should render', () => {
-    const id = 'test';
-    const block = new TestBlock({ id });
     expect(block.render()).to.eq(`<div id="${id}">Test</div>`);
   });
 });

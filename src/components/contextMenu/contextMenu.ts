@@ -26,7 +26,7 @@ export default class ContextMenu extends Block<ContextMenuProps> {
   }
 
   protected render(): string {
-    let buffHtml = `<ul id="{{ id }}" class="${styles['context-menu']} ${this.props.closed ? styles.hidden : ''}">`;
+    let buffHtml = `<ul id="{{ id }}" class="${styles.contextMenu} ${this.props.closed ? styles.hidden : ''}">`;
     this.props.childrenContent!.forEach((child) => {
       buffHtml += `
         <li>

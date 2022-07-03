@@ -31,25 +31,25 @@ export default class ChatListItem extends Block<IProps> {
   protected render(): string {
     let buffHtml = `
     <div
-      class="${styles['chat-item']}
+      class="${styles.chatItem}
           {{#if opened}}
           ${styles.checked}
           {{/if}}
       "
     >
-      <div class="${styles['chat-item__icon']}"></div>
-      <div class="${styles['chat-item__text-group']}">
-        <span class="${styles['text-group__username']}">{{ username }}</span>
-        <span class="${styles['text-group__last-msg']}">{{ lastMessage }}</span>
+      <div class="${styles.chatItem__icon}"></div>
+      <div class="${styles.chatItem__textGroup}">
+        <span class="${styles.textGroup__username}">{{ username }}</span>
+        <span class="${styles.textGroup__lastMsg}">{{ lastMessage }}</span>
       </div>
-      <div class="${styles['chat-item__msg-info-group']}">
+      <div class="${styles.chatItem__msgInfoGroup}">
         <span
-          class="${styles['msg-info-group__last-online']}"
+          class="${styles.msgInfoGroup__lastOnline}"
           >{{ lastOnline }}</span
         >`;
 
     buffHtml += (this.props.unreadMessagesCount)
-      ? `<span class="${styles['msg-info-group__unread-msg']}">{{ unreadMessagesCount }}</span>`
+      ? `<span class="${styles.msgInfoGroup__unreadMsg}">{{ unreadMessagesCount }}</span>`
       : '';
     buffHtml += `</div>
             </div>`;

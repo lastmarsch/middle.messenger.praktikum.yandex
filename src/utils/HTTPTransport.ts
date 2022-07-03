@@ -5,13 +5,7 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
-/**
- * Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
- * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
- * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
- */
 function queryStringify(data?: { [key: string]: number | string | object }) {
-  // Можно делать трансформацию GET-параметров в отдельной функции
   let query = '';
   if (data) {
     for (const [key, value] of Object.entries(data)) {
@@ -41,7 +35,6 @@ export class HTTPTransport {
     options.timeout,
   );
 
-  // PUT, POST, DELETE
   put = (url: string, options: IOptions = { method: METHODS.PUT, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.PUT },
@@ -60,9 +53,6 @@ export class HTTPTransport {
     options.timeout,
   );
 
-  // options:
-  // headers — obj
-  // data — obj
   request(
     url: string,
     options: IOptions = {

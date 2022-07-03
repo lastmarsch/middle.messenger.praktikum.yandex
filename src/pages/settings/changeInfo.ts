@@ -2,42 +2,32 @@ import { Block, IProps } from '../../core';
 import styles from './settings.module.css';
 import { backPath } from '../../const/images';
 import { authService, userService } from '../../services';
-import { ValidatedInput } from '../../components';
-import { VALIDATION_RULES, withRouter } from '../../utils';
+import {
+  logError, VALIDATION_RULES, withRouter, withValidation,
+} from '../../utils';
 
 class ChangeInfoPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
-      const data = Object.fromEntries(new FormData(form));
 
-      let isValid = true;
-      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
-        if (!document.body.contains(child.element)
-        || !(child.validateSelf)
-        || !(child.props.id! in data)) { return; }
-
-        const childValidity = child.validateSelf();
-        isValid = isValid && childValidity;
-      });
-
-      console.log(data);
-
-      if (isValid) {
-        userService.profile(data)
-          .then((user) => this.props.router.go('/settings'))
-          .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
-      }
+      this.props.validate(form)
+        .then((data) => {
+          userService.profile(data)
+            .then(() => this.props.router.go('/settings'))
+            .catch(logError);
+        })
+        .catch(logError);
     };
 
-    const onChange = (e) => {
+    const onChange = () => {
       const file = e.target.files[0];
       if (!file) return;
       const data = new FormData();
       data.append('avatar', file);
       userService.avatar(data)
-        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+        .catch(logError);
     };
 
     super({
@@ -62,33 +52,29 @@ class ChangeInfoPage extends Block<IProps> {
 
   componentDidMount() {
     authService.getCurrentUser()
-      .then((user) => {
-        this.setProps({ user });
-      })
-      .catch((e) => this.props.router.go('/'));
+      .then((user) => this.setProps({ user }))
+      .catch(() => this.props.router.go('/'));
   }
 
   show(): void {
     authService.getCurrentUser()
-      .then((user) => {
-        this.setProps({ user });
-      })
-      .catch((e) => this.props.router.go('/'));
+      .then((user) => this.setProps({ user }))
+      .catch(() => this.props.router.go('/'));
 
     super.show();
   }
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       {{{ Link 
         href="/messenger" 
-        class="${styles['side-button']}" 
+        class="${styles.sideButton}" 
         img="${backPath}"
         onClick=goToMessenger 
       }}}
-      <div class="${styles['main-area']}">
-        <div class="${styles['main-area__header']}">
+      <div class="${styles.mainArea}">
+        <div class="${styles.mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -96,9 +82,9 @@ class ChangeInfoPage extends Block<IProps> {
             edit=true
             onChange=onChange
           }}}
-          <span class="${styles['main-area__username']}">{{ user.display_name }}</span>
+          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <form id="changeInfo" class="${styles['main-area__list']}">
+        <form id="changeInfo" class="${styles.mainArea__list}">
           {{{ SettingsItem 
             id="first_name" 
             name="first_name" 
@@ -107,6 +93,9 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.first_name
             regexp="${VALIDATION_RULES.first_name.regexp}" 
             rules="${VALIDATION_RULES.first_name.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="second_name" 
@@ -116,6 +105,9 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.second_name
             regexp="${VALIDATION_RULES.second_name.regexp}" 
             rules="${VALIDATION_RULES.second_name.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="display_name" 
@@ -125,6 +117,9 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.display_name
             regexp="${VALIDATION_RULES.first_name.regexp}" 
             rules="${VALIDATION_RULES.first_name.rules}"
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="login" 
@@ -134,6 +129,9 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.login
             regexp="${VALIDATION_RULES.login.regexp}" 
             rules="${VALIDATION_RULES.login.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="email" 
@@ -143,6 +141,9 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.email
             regexp="${VALIDATION_RULES.email.regexp}" 
             rules="${VALIDATION_RULES.email.rules}"
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="phone" 
@@ -152,11 +153,14 @@ class ChangeInfoPage extends Block<IProps> {
             value=user.phone
             regexp="${VALIDATION_RULES.phone.regexp}" 
             rules="${VALIDATION_RULES.phone.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
         </form>
         {{{ Button 
           form="changeInfo" 
-          class="${styles['main-area__submit']}" 
+          class="${styles.mainArea__submit}" 
           type="submit" 
           innerText="Save changes"
         }}}
@@ -166,4 +170,4 @@ class ChangeInfoPage extends Block<IProps> {
   }
 }
 
-export default withRouter(ChangeInfoPage);
+export default withRouter(withValidation(ChangeInfoPage));

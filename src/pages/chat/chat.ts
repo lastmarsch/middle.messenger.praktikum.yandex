@@ -4,31 +4,19 @@ import {
   settingsPath, plusPath, morePath, paperclipPath, sendPath,
 } from '../../const/images';
 import {
-  formatDateTime, VALIDATION_RULES, withRouter,
+  formatDateTime, logError, VALIDATION_RULES, withRouter, withValidation,
 } from '../../utils';
 import { authService, chatService } from '../../services';
-import { ValidatedInput } from '../../components';
 
 class ChatPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
-      const data = Object.fromEntries(new FormData(form));
 
-      console.log(data);
-
-      let isValid = false;
-      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
-        if (!document.body.contains(child.element)
-        || !(child.validateSelf)
-        || !(child.props.id! in data)) { return; }
-
-        // some logic here
-        isValid = child.validateSelf();
-      });
-
-      if (isValid) { chatService.sendMessage(data); }
+      this.props.validate(form)
+        .then((data) => chatService.sendMessage(data))
+        .catch(logError);
     };
 
     // manage modal & context menu visibility
@@ -45,16 +33,14 @@ class ChatPage extends Block<IProps> {
     // chats
     const getChats = () => {
       chatService.getChats()
-        .then((r) => {
-          this.setProps({ chats: r });
-        })
-        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+        .then((r) => this.setProps({ chats: r }))
+        .catch(logError);
     };
 
     const createChatWithUser = (data) => {
       chatService.createChatWithUser(data, this.props.user.id)
-        .then((r) => getChats())
-        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+        .then(() => getChats())
+        .catch(logError);
     };
 
     const leaveChat = () => {
@@ -62,20 +48,20 @@ class ChatPage extends Block<IProps> {
         users: [this.props.user.id],
         chatId: this.props.currentConvoId,
       })
-        .then((r) => {
+        .then(() => {
           this.setProps({ currentConvoId: null });
           getChats();
         })
-        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+        .catch(logError);
     };
 
     const deleteChat = () => {
       chatService.deleteChat({ chatId: this.props.currentConvoId })
-        .then((r) => {
+        .then(() => {
           this.setProps({ currentConvoId: null });
           getChats();
         })
-        .catch((e) => console.log(`%c ${e}`, 'background: #c6282850;'));
+        .catch(logError);
     };
 
     const onOpenChat = (e: CustomEvent) => {
@@ -112,19 +98,17 @@ class ChatPage extends Block<IProps> {
 
   componentDidMount(): void {
     authService.getCurrentUser()
-      .then((user) => {
-        this.setProps({ user });
-      })
-      .catch((e) => this.props.router.go('/'));
+      .then((user) => this.setProps({ user }))
+      .catch(() => this.props.router.go('/'));
 
     this.props.getChats();
   }
 
   protected render() {
     let buffHtml = `
-    <div class="${styles['app-container']}">
-      <div class="${styles['side-menu']}">
-        <div class="${styles['side-menu__panel']}">
+    <div class="${styles.appContainer}">
+      <div class="${styles.sideMenu}">
+        <div class="${styles.sideMenu__panel}">
           {{{ Link 
             href="/settings" 
             img="${settingsPath}" 
@@ -143,7 +127,7 @@ class ChatPage extends Block<IProps> {
           }}}
         </div>
 
-        <div class="${styles['side-menu__list']}">
+        <div class="${styles.sideMenu__list}">
         `;
 
     this.props.chats.forEach((chat: Chat) => {
@@ -175,10 +159,10 @@ class ChatPage extends Block<IProps> {
           <div class="${styles.panel__icon}">
             <img src="" />
           </div>
-          <div class="${styles['panel__user-info']}">
-            <span class="${styles['user-info__username']}"
+          <div class="${styles.panel__userInfo}">
+            <span class="${styles.userInfo__username}"
               >${currentChat ? currentChat.title : ''}</span>
-            <span class="${styles['user-info__last-online']}"
+            <span class="${styles.userInfo__lastOnline}"
               >Last online: <time> </time> </span>
           </div>
         </div>
@@ -224,24 +208,27 @@ class ChatPage extends Block<IProps> {
 
     buffHtml += `
       </div>
-      <form id="send" class="${styles['main__edit-msg']}">
+      <form id="send" class="${styles.main__editMsg}">
         {{{ Link 
           href="#"             
           class="" 
           img="${paperclipPath}" 
         }}}
-        {{{ ValidatedInput 
+        {{{ Input 
           id="message" 
           name="message" 
           type="text" 
           placeholder="Start typing..." 
           regexp="${VALIDATION_RULES.message.regexp}"               
           rules="${VALIDATION_RULES.message.rules}" 
+
+          onFocus=validateInput
+          onBlur=validateInput
         }}}
         {{{ Button 
           type="submit" 
           form="send" 
-          class="${styles['edit-msg__button']}" 
+          class="${styles.editMsg__button}" 
           innerText="Send message" 
           img="${sendPath}" 
         }}}
@@ -289,4 +276,4 @@ class ChatPage extends Block<IProps> {
   }
 }
 
-export default withRouter(ChatPage);
+export default withRouter(withValidation(ChatPage));

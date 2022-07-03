@@ -1,13 +1,13 @@
 @import "../../../../app.css";
 
-.settings-item {
+.settingsItem {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
 
-  &__input-group {
+  &__inputGroup {
     width: 100%;
     height: 35px;
     align-self: stretch;
@@ -52,7 +52,7 @@
     display: none;
   }
 
-  .invalid &__input-group {
+  .invalid &__inputGroup {
     border-color: $error-color;
   }
 

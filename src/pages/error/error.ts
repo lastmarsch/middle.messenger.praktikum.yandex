@@ -17,7 +17,7 @@ class ErrorPage extends Block<IProps> {
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       <div class="${styles.error}">
         <span class="${styles.error__title}">
           ${this.props.code}

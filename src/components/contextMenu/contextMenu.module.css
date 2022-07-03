@@ -1,6 +1,6 @@
 @import "../../app.css";
 
-.context-menu {
+.contextMenu {
   @mixin Bordered-window;
 
   background-color: #fff;
