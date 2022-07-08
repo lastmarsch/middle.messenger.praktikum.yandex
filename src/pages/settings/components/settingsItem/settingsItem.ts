@@ -1,8 +1,7 @@
-import { InputProps } from '../../../../components/input/input';
-import ValidatedInput from '../../../../components/validatedInput';
+import { Input, InputProps } from '../../../../components/input';
 import styles from './settingsItem.module.css';
 
-export default class SettingsItem extends ValidatedInput {
+export default class SettingsItem extends Input {
   public static componentName = 'SettingsItem';
 
   constructor(props: InputProps) {
@@ -13,13 +12,13 @@ export default class SettingsItem extends ValidatedInput {
 
   protected render(): string {
     return `
-    <div class="${styles['settings-item']}">
-      <div class="${styles['settings-item__input-group']}">
-        <label class="${styles['settings-item__title']}">
+    <div class="${styles.settingsItem}">
+      <div class="${styles.settingsItem__inputGroup}">
+        <label class="${styles.settingsItem__title}">
           {{ title }}
         </label>
   
-        <input class="${styles['settings-item__input']}"
+        <input class="${styles.settingsItem__input}"
         {{#if type}}
         type="{{ type }}"
         {{else}}
@@ -45,7 +44,7 @@ export default class SettingsItem extends ValidatedInput {
       </div>
   
       <!-- Error  -->
-      <span class="${styles['settings-item__error']}">{{ rules }}</span>
+      <span class="${styles.settingsItem__error}">{{ rules }}</span>
     </div>  
     `;
   }

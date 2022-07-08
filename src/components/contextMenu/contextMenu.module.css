@@ -1,0 +1,41 @@
+@import "../../app.css";
+
+.contextMenu {
+  @mixin Bordered-window;
+
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  list-style: none;
+  right: 19px;
+  top: 20px;
+  padding: 0;
+
+  li {
+    align-self: stretch;
+
+    a {
+      @mixin Bold-ordinary-text;
+
+      text-decoration: none;
+      color: $cool-dark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      height: 30px;
+    }
+  }
+
+  li:hover {
+    background-color: #936bbc30;
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none;
+}

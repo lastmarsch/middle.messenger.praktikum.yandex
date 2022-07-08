@@ -1,6 +1,6 @@
 @import "../../../../app.css";
 
-.chat-item {
+.chatItem {
   height: 75px;
   align-self: stretch;
   flex-grow: 0;
@@ -20,14 +20,14 @@
   }
 
   &__icon {
-    width: 55px;
-    height: 55px;
+    min-width: 55px;
+    min-height: 55px;
     flex-grow: 0;
     background-color: white;
     border-radius: 55px;
   }
 
-  &__text-group {
+  &__textGroup {
     align-self: stretch;
     flex-grow: 1;
     display: flex;
@@ -36,15 +36,15 @@
     align-items: stretch;
     gap: 5px;
     padding: 0;
-    width: 325px;
+    max-width: 290px;
 
-    .text-group__username {
+    .textGroup__username {
       @mixin Medium-bold-text;
 
       color: $cool-grey;
     }
 
-    .text-group__last-msg {
+    .textGroup__lastMsg {
       @mixin Small-text;
 
       color: $cool-grey;
@@ -54,8 +54,7 @@
     }
   }
 
-  &__msg-info-group {
-    width: 24px;
+  &__msgInfoGroup {
     align-self: stretch;
     flex-grow: 0;
     display: flex;
@@ -64,14 +63,15 @@
     align-items: flex-end;
     gap: 13px;
     padding: 0;
+    min-width: 60px;
 
-    .msg-info-group__last-online {
+    .msgInfoGroup__lastOnline {
       @mixin Small-text;
 
       color: $cool-grey;
     }
 
-    .msg-info-group__unread-msg {
+    .msgInfoGroup__unreadMsg {
       @mixin Bold-ordinary-text;
 
       font-size: 12px;
@@ -90,7 +90,7 @@
   }
 }
 
-.chat-item.checked {
+.chatItem.checked {
   cursor: pointer;
   background-color: #1000ff14;
   transition: all 0.1s ease-in-out;

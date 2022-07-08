@@ -1,6 +1,5 @@
-import routes from '../../const/routes';
-import { Block, renderDOM } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
+import { withRouter } from '../../utils';
 import styles from './error.module.css';
 
 interface ErrorProps extends IProps {
@@ -8,18 +7,17 @@ interface ErrorProps extends IProps {
   text?: string,
 }
 
-export default class ErrorPage extends Block<IProps> {
+class ErrorPage extends Block<IProps> {
   constructor(props: ErrorProps) {
-    const onClick = (props: IProps) => {
-      if (props.href in routes) { renderDOM(routes[props.href]); }
-    };
-
-    super({ ...props, onClick });
+    super({
+      ...props,
+      goToMessenger: () => this.props.router.go('/messenger'),
+    });
   }
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       <div class="${styles.error}">
         <span class="${styles.error__title}">
           ${this.props.code}
@@ -27,12 +25,14 @@ export default class ErrorPage extends Block<IProps> {
           ${this.props.text}
         </span>
         {{{ Link 
-          href="/chat" 
+          href="" 
           class="${styles.error__link}" 
           text="Back to chats" 
-          onClick=onClick
+          onClick=goToMessenger
         }}}
       </div>
     </div>`;
   }
 }
+
+export default withRouter(ErrorPage);

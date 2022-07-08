@@ -1,8 +1,7 @@
-import { Block } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
 // import styles from './link.module.css';
 
-interface LinkProps extends IProps {
+export interface LinkProps extends IProps {
   href: string,
   class?: string,
   img?: string,
@@ -10,19 +9,21 @@ interface LinkProps extends IProps {
   onClick?: (...args: any[]) => void
 }
 
-export default class Link extends Block<IProps> {
+export class Link extends Block<IProps> {
   public static componentName = 'Link';
 
   constructor({ onClick, ...props }: LinkProps) {
     super({ ...props });
-    this.setProps({
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          onClick!(props);
+    if (onClick) {
+      this.setProps({
+        events: {
+          click: (e) => {
+            e.preventDefault();
+            onClick!(props);
+          },
         },
-      },
-    });
+      });
+    }
   }
 
   protected render(): string {

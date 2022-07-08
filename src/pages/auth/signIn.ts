@@ -1,66 +1,74 @@
-import ValidatedInput from '../../components/validatedInput';
-import routes from '../../const/routes';
-import { Block, renderDOM } from '../../core';
-import { IProps } from '../../core/Block';
-import VALIDATION_RULES from '../../utils/validationRules';
+import { Block, IProps } from '../../core';
+import { authService } from '../../services';
+import {
+  logError, VALIDATION_RULES, withRouter, withValidation,
+} from '../../utils';
 import styles from './auth.module.css';
 
-export default class SignInPage extends Block<IProps> {
+class SignInPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
-      const data = Object.fromEntries(new FormData(form));
 
-      console.log(data);
-
-      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
-        if (!document.body.contains(child.element)
-        || !(child.validateSelf)
-        || !(child.props.id! in data)) { return; }
-
-        // some logic here
-        child.validateSelf();
-      });
+      this.props.validate(form)
+        .then((data) => {
+          authService.signIn(data)
+            .then(() => this.props.router.go('/messenger'))
+            .catch(logError);
+        })
+        .catch(logError);
     };
 
-    const onClick = (props: IProps) => {
-      if (props.href in routes) { renderDOM(routes[props.href]); }
-    };
+    authService.getCurrentUser()
+      .then(() => this.props.router.go('/messenger'))
+      .catch(logError);
 
     super({
       ...props,
-      onClick,
+      goToSignUp: () => this.props.router.go('/sign-up'),
       events: {
         submit: onSubmit,
       },
     });
   }
 
+  show(): void {
+    authService.getCurrentUser()
+      .then(() => this.props.router.go('/messenger'))
+      .catch(logError);
+
+    super.show();
+  }
+
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       <div class="${styles.container}">
         <span class="${styles.container__title}">
           Sign in
         </span>
 
         <form id="signin" action="" class="${styles.container__form}">
-          {{{ ValidatedInput 
+          {{{ Input 
             id="login" 
             name="login" 
             title="Username" 
             type="text" 
             regexp="${VALIDATION_RULES.login.regexp}" 
             rules="${VALIDATION_RULES.login.rules}" 
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
-          {{{ ValidatedInput 
+          {{{ Input 
             id="password" 
             name="password" 
             title="Password" 
             type="password" 
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
         </form>
 
@@ -72,10 +80,10 @@ export default class SignInPage extends Block<IProps> {
             innerText="Sign in" 
           }}}
           {{{ Link 
-            href="/signUp" 
+            href="/sign-up" 
             class="${styles.container__link}" 
             text="Sign up" 
-            onClick=onClick
+            onClick=goToSignUp
           }}}
         </div>
       </div>    
@@ -83,3 +91,5 @@ export default class SignInPage extends Block<IProps> {
     `;
   }
 }
+
+export default withRouter(withValidation(SignInPage));

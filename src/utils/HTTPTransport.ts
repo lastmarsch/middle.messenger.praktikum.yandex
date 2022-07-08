@@ -1,17 +1,11 @@
-enum METHODS {
+export enum METHODS {
   GET = 'GET',
   PUT = 'PUT',
   POST = 'POST',
   DELETE = 'DELETE',
 }
 
-/**
- * Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
- * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
- * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
- */
 function queryStringify(data?: { [key: string]: number | string | object }) {
-  // Можно делать трансформацию GET-параметров в отдельной функции
   let query = '';
   if (data) {
     for (const [key, value] of Object.entries(data)) {
@@ -31,17 +25,16 @@ export interface IOptions {
   retries?: number;
   timeout?: number;
   headers?: { [key: string]: string };
-  data?: { [key: string]: number | string | object };
+  data?: { [key: string]: number | string | object } | FormData;
 }
 
-class HTTPTransport {
+export class HTTPTransport {
   get = (url: string, options: IOptions = { method: METHODS.GET, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.GET },
     options.timeout,
   );
 
-  // PUT, POST, DELETE
   put = (url: string, options: IOptions = { method: METHODS.PUT, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.PUT },
@@ -60,16 +53,13 @@ class HTTPTransport {
     options.timeout,
   );
 
-  // options:
-  // headers — obj
-  // data — obj
   request(
     url: string,
     options: IOptions = {
       method: METHODS.GET,
     },
     timeout = 5000,
-  ) {
+  ) : Promise<FetchResponse> {
     const { method, headers, data } = options;
 
     return new Promise((resolve, reject) => {
@@ -79,13 +69,18 @@ class HTTPTransport {
 
       const xhr = new XMLHttpRequest();
 
+      xhr.open(method, url + queryStringify(data));
+
       if (headers) {
         for (const [key, value] of Object.entries(headers)) {
           xhr.setRequestHeader(key, value);
         }
+      } else {
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
       }
 
-      xhr.open(method, url + queryStringify(data));
+      xhr.withCredentials = true;
 
       xhr.onload = () => resolve(xhr);
 
@@ -95,11 +90,11 @@ class HTTPTransport {
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (headers && headers!['Content-Type'] === 'multipart/form-data') {
+        xhr.send(data);
       } else {
         xhr.send(JSON.stringify(data));
       }
     });
   }
 }
-
-export default HTTPTransport;

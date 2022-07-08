@@ -1,20 +1,49 @@
 // components
-import Button from './components/button';
-import Input from './components/input';
-import ValidatedInput from './components/validatedInput';
-import Link from './components/link';
+import {
+  Button, Input, Link, Avatar, Modal, ContextMenu,
+} from './components';
 import ChatListItem from './pages/chat/components/chatListItem';
 import Message from './pages/chat/components/message';
 import SettingsItem from './pages/settings/components/settingsItem';
 
-import { registerComponent, renderDOM } from './core';
-import routes from './const/routes';
+import { registerComponent, Router } from './core';
 
-[Button, Input, ValidatedInput, Link, ChatListItem, Message, SettingsItem]
+// pages
+import { SignInPage, SignUpPage } from './pages/auth';
+import { ChangeInfoPage, ChangePasswordPage, ProfilePage } from './pages/settings';
+import ChatPage from './pages/chat';
+import { Page404, Page500 } from './pages/error';
+
+[Button,
+  Input,
+  Avatar,
+  Link,
+  Modal,
+  ContextMenu,
+  ChatListItem,
+  Message,
+  SettingsItem]
   .forEach((component) => {
     registerComponent(component);
   });
 
+declare global {
+  interface Window {
+    router: Router;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  renderDOM(routes['/']);
+  const router = new Router();
+  window.router = router;
+  router
+    .use('/', SignInPage, {})
+    .use('/sign-up', SignUpPage, {})
+    .use('/settings', ProfilePage, {})
+    .use('/settings-info', ChangeInfoPage, {})
+    .use('/settings-password', ChangePasswordPage, {})
+    .use('/messenger', ChatPage, {})
+    .use('/500', Page500, {})
+    .use('*', Page404, {})
+    .start();
 });

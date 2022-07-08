@@ -1,4 +1,4 @@
-import Input, { InputProps } from '../input/input';
+import { Input, InputProps } from '../input';
 import styles from './validatedInput.module.css';
 
 export default class ValidatedInput extends Input {
@@ -31,15 +31,17 @@ export default class ValidatedInput extends Input {
     input.addEventListener('blur', this.validateSelf.bind(this));
   }
 
-  validateSelf() {
+  validateSelf(): boolean {
     const input: HTMLInputElement = this._element.querySelector(`#${this.props.id}`)!;
-    if (!input && !this.props.regexp) { return; }
+    if (!input && !this.props.regexp) { return false; }
 
     const text = input.value;
     const isValid = RegExp(this.props.regexp as string).test(text);
     if (isValid) {
       this._element.classList.remove(this.props.invalidClassName as string);
     } else { this._element.classList.add(this.props.invalidClassName as string); }
+
+    return isValid;
   }
 
   protected render(): string {

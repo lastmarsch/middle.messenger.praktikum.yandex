@@ -1,64 +1,95 @@
-import { Block, renderDOM } from '../../core';
-import { IProps } from '../../core/Block';
+import { Block, IProps } from '../../core';
 import styles from './settings.module.css';
-import * as user from '../../data/user.json';
+import { backPath } from '../../const/images';
 import {
-  avatarPath, backPath,
-} from '../../const/images';
-import VALIDATION_RULES from '../../utils/validationRules';
-import ValidatedInput from '../../components/validatedInput';
-import routes from '../../const/routes';
+  logError, VALIDATION_RULES, withRouter, withValidation,
+} from '../../utils';
+import { authService, userService } from '../../services';
 
-export default class ChangePasswordPage extends Block<IProps> {
+class ChangePasswordPage extends Block<IProps> {
   constructor(props: IProps) {
     const onSubmit = (e: SubmitEvent) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
-      const data = Object.fromEntries(new FormData(form));
 
-      console.log(data);
+      this.props.validate(form)
+        .then((data) => {
+          const passwordsMatch = data.new_password === data.confirm_password;
+          if (!passwordsMatch) {
+          // show error
+            return;
+          }
 
-      (Object.values(this.children) as ValidatedInput[]).forEach((child) => {
-        if (!document.body.contains(child.element)
-        || !(child.validateSelf)
-        || !(child.props.id! in data)) { return; }
+          const transformedData = {
+            oldPassword: data.old_password as string,
+            newPassword: data.new_password as string,
+          };
 
-        // some logic here
-        child.validateSelf();
-      });
-    };
-
-    const onClick = (props: IProps) => {
-      if (props.href in routes) { renderDOM(routes[props.href]); }
+          userService.password(transformedData)
+            .then(() => this.props.router.go('/settings'))
+            .catch(logError);
+        })
+        .catch(logError);
     };
 
     super({
       ...props,
-      onClick,
+      user: {
+        id: 0,
+        first_name: '',
+        second_name: '',
+        display_name: '',
+        login: '',
+        email: '',
+        phone: '',
+        avatar: '',
+      },
       events: {
         submit: onSubmit,
       },
+      goToMessenger: () => this.props.router.go('/messenger'),
     });
+  }
+
+  componentDidMount() {
+    authService.getCurrentUser()
+      .then((user) => {
+        this.setProps({ user });
+      })
+      .catch((e) => this.props.router.go('/'));
+  }
+
+  show(): void {
+    authService.getCurrentUser()
+      .then((user) => {
+        this.setProps({ user });
+      })
+      .catch((e) => this.props.router.go('/'));
+
+    super.show();
   }
 
   protected render() {
     return `
-    <div class="${styles['app-container']}">
+    <div class="${styles.appContainer}">
       {{{ Link 
-        href="/chat" 
-        class="${styles['side-button']}" 
+        href="/messenger" 
+        class="${styles.sideButton}" 
         img="${backPath}" 
-        onClick=onClick
+        onClick=goToMessenger
       }}}
-      <div class="${styles['main-area']}">
-        <div class="${styles['main-area__header']}">
-          <label for="uploadAvatar" class="${styles['main-area__icon']}">
-            <img src="${avatarPath}">
-            <input type="file" name="uploadAvatar" id="uploadAvatar" hidden="true">
-          </label>
-          <span class="${styles['main-area__username']}">${user.display_name}</span>
+      <div class="${styles.mainArea}">
+        <div class="${styles.mainArea__header}">
+          {{{ Avatar
+            id="avatar"
+            name="avatar"
+            avatar=user.avatar
+            edit=true
+            onClick=changeAvatar
+          }}}
+          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <form id="changePassword" class="${styles['main-area__list']}">
+        <form id="changePassword" class="${styles.mainArea__list}">
           {{{ SettingsItem 
             id="old_password" 
             name="old_password" 
@@ -66,6 +97,9 @@ export default class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="new_password" 
@@ -74,6 +108,9 @@ export default class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
           {{{ SettingsItem 
             id="confirm_password" 
@@ -82,11 +119,14 @@ export default class ChangePasswordPage extends Block<IProps> {
             type="password"
             regexp="${VALIDATION_RULES.password.regexp}" 
             rules="${VALIDATION_RULES.password.rules}" 
+
+            onFocus=validateInput
+            onBlur=validateInput
           }}}
         </form>
         {{{ Button 
           form="changePassword" 
-          class="${styles['main-area__submit']}" 
+          class="${styles.mainArea__submit}" 
           type="submit" 
           innerText="Save changes"
         }}}
@@ -95,3 +135,5 @@ export default class ChangePasswordPage extends Block<IProps> {
     `;
   }
 }
+
+export default withRouter(withValidation(ChangePasswordPage));

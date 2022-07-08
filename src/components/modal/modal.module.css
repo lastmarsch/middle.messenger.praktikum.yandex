@@ -1,0 +1,66 @@
+@import "../../app.css";
+
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000030;
+
+  &__body {
+    @mixin Bordered-window;
+
+    padding: 30px;
+    gap: 15px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__title {
+    @mixin Medium-bold-text;
+
+    color: $cool-dark;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    align-self: stretch;
+    gap: 15px;
+
+    button {
+      @mixin Bold-ordinary-text;
+
+      color: white;
+      white-space: nowrap;
+      width: 100%;
+      height: 30px;
+      flex-grow: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: $action-color;
+      box-sizing: border-box;
+      border: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
