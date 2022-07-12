@@ -15,7 +15,7 @@ class ChatPage extends Block<IProps> {
       const form = e.target as HTMLFormElement;
 
       this.props.validate(form)
-        .then((data) => chatService.sendMessage(data))
+        .then((data: { message: string; }) => chatService.sendMessage(data))
         .catch(logError);
     };
 
@@ -37,7 +37,7 @@ class ChatPage extends Block<IProps> {
         .catch(logError);
     };
 
-    const createChatWithUser = (data) => {
+    const createChatWithUser = (data: { title: string; user: number; }) => {
       chatService.createChatWithUser(data, this.props.user.id)
         .then(() => getChats())
         .catch(logError);
@@ -108,7 +108,7 @@ class ChatPage extends Block<IProps> {
     let buffHtml = `
     <div class="${styles.appContainer}">
       <div class="${styles.sideMenu}">
-        <div class="${styles.sideMenu__panel}">
+        <div class="${(styles as any).sideMenu__panel}">
           {{{ Link 
             href="/settings" 
             img="${settingsPath}" 
@@ -127,7 +127,7 @@ class ChatPage extends Block<IProps> {
           }}}
         </div>
 
-        <div class="${styles.sideMenu__list}">
+        <div class="${(styles as any).sideMenu__list}">
         `;
 
     this.props.chats.forEach((chat: Chat) => {
@@ -154,7 +154,7 @@ class ChatPage extends Block<IProps> {
 
     buffHtml += `
     <div class="${styles.main}">
-      <div class="${styles.main__panel}">
+      <div class="${(styles as any).main__panel}">
         <div class="${styles.panel__left}">
           <div class="${styles.panel__icon}">
             <img src="" />
@@ -195,7 +195,7 @@ class ChatPage extends Block<IProps> {
     buffHtml += `'
         }}}
       </div>
-      <div class="${styles.main__msgs}">`;
+      <div class="${(styles as any).main__msgs}">`;
 
     this.props.messages.forEach((msg: Message) => {
       buffHtml += `
@@ -208,7 +208,7 @@ class ChatPage extends Block<IProps> {
 
     buffHtml += `
       </div>
-      <form id="send" class="${styles.main__editMsg}">
+      <form id="send" class="${(styles as any).main__editMsg}">
         {{{ Link 
           href="#"             
           class="" 
@@ -276,4 +276,4 @@ class ChatPage extends Block<IProps> {
   }
 }
 
-export default withRouter(withValidation(ChatPage));
+export default withRouter(withValidation(ChatPage as any) as any);

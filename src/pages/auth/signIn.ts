@@ -1,3 +1,4 @@
+import { SignInRequestData } from '../../api/types';
 import { Block, IProps } from '../../core';
 import { authService } from '../../services';
 import {
@@ -12,7 +13,7 @@ class SignInPage extends Block<IProps> {
       const form = e.target as HTMLFormElement;
 
       this.props.validate(form)
-        .then((data) => {
+        .then((data: SignInRequestData) => {
           authService.signIn(data)
             .then(() => this.props.router.go('/messenger'))
             .catch(logError);
@@ -45,11 +46,11 @@ class SignInPage extends Block<IProps> {
     return `
     <div class="${styles.appContainer}">
       <div class="${styles.container}">
-        <span class="${styles.container__title}">
+        <span class="${(styles as any).container__title}">
           Sign in
         </span>
 
-        <form id="signin" action="" class="${styles.container__form}">
+        <form id="signin" action="" class="${(styles as any).container__form}">
           {{{ Input 
             id="login" 
             name="login" 
@@ -72,16 +73,16 @@ class SignInPage extends Block<IProps> {
           }}}
         </form>
 
-        <div class="${styles.container__form}">
+        <div class="${(styles as any).container__form}">
           {{{ Button 
             form="signin" 
             type="submit" 
-            class="${styles.container__button}" 
+            class="${(styles as any).container__button}" 
             innerText="Sign in" 
           }}}
           {{{ Link 
             href="/sign-up" 
-            class="${styles.container__link}" 
+            class="${(styles as any).container__link}" 
             text="Sign up" 
             onClick=goToSignUp
           }}}
@@ -92,4 +93,4 @@ class SignInPage extends Block<IProps> {
   }
 }
 
-export default withRouter(withValidation(SignInPage));
+export default withRouter(withValidation(SignInPage as any) as any);

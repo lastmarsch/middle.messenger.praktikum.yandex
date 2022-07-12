@@ -5,9 +5,12 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
-function queryStringify(data?: { [key: string]: number | string | object }) {
+type Data = { [key: string]: number | string | object };
+
+function queryStringify(data?: Data) {
   let query = '';
   if (data) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(data)) {
       query += `&${key}=${value}`;
     }
@@ -47,6 +50,7 @@ export class HTTPTransport {
     options.timeout,
   );
 
+  // eslint-disable-next-line max-len
   delete = (url: string, options: IOptions = { method: METHODS.DELETE, timeout: 5000 }) => this.request(
     url,
     { ...options, method: METHODS.DELETE },
@@ -69,9 +73,10 @@ export class HTTPTransport {
 
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url + queryStringify(data));
+      xhr.open(method, url + queryStringify(data as Data));
 
       if (headers) {
+        // eslint-disable-next-line no-restricted-syntax
         for (const [key, value] of Object.entries(headers)) {
           xhr.setRequestHeader(key, value);
         }
@@ -91,7 +96,7 @@ export class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else if (headers && headers!['Content-Type'] === 'multipart/form-data') {
-        xhr.send(data);
+        xhr.send(data as FormData);
       } else {
         xhr.send(JSON.stringify(data));
       }

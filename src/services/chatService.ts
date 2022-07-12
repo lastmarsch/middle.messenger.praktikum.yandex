@@ -29,7 +29,7 @@ const chatService = {
       .then((r) => new Promise((resolve, reject) => {
         chatService.addUsersToChat({
           users: [user],
-          chatId: r.id,
+          chatId: (r as any).id,
         })
           // eslint-disable-next-line @typescript-eslint/no-shadow
           .then((r) => resolve(r))
@@ -90,26 +90,26 @@ const chatService = {
     currentUserId: number | string,
     callback: (...args: any[]) => void,
   ) => chatService.getChatToken(data)
-    .then((token) => new Promise((resolve, reject) => {
+    .then((token) => new Promise((resolve) => {
       const { chatId } = data;
 
-      if (chatService.ws) { chatService.ws.close(); }
+      if (chatService.ws) { (chatService.ws! as WebSocket).close(); }
 
-      chatService.ws = new WebSocket(
+      (chatService.ws! as WebSocket) = new WebSocket(
         `wss://ya-praktikum.tech/ws/chats/${currentUserId}/${chatId}/${token}`,
       );
 
-      chatService.ws.addEventListener('open', () => {
+      (chatService.ws! as WebSocket).addEventListener('open', () => {
         console.log('Соединение установлено');
 
-        chatService.ws.send(
+        (chatService.ws! as WebSocket).send(
           JSON.stringify({
             content: '0',
             type: 'get old',
           }),
         );
 
-        chatService.ws.addEventListener('message', (event) => {
+        (chatService.ws! as WebSocket).addEventListener('message', (event) => {
           console.log('Получены данные', event, event.data);
 
           let messages = JSON.parse(event.data);
@@ -118,7 +118,7 @@ const chatService = {
         });
       });
 
-      chatService.ws.addEventListener('close', (event) => {
+      (chatService.ws! as WebSocket).addEventListener('close', (event) => {
         if (event.wasClean) {
           console.log('Соединение закрыто чисто');
         } else {
@@ -128,23 +128,23 @@ const chatService = {
         console.log(`Код: ${event.code} | Причина: ${event.reason}`);
       });
 
-      chatService.ws.addEventListener('error', (event) => {
-        console.log('Ошибка', event.message);
+      (chatService.ws! as WebSocket).addEventListener('error', (event) => {
+        console.log('Ошибка', (event as any).message);
       });
 
       resolve(true);
     }))
     .catch((e) => Promise.reject(new Error(`[connectToWS] ${e}`))),
 
-  sendMessage({ message }) {
+  sendMessage({ message }: { message: string }) {
     if (chatService.ws) {
-      chatService.ws.send(
+      (chatService.ws! as WebSocket).send(
         JSON.stringify({
           content: message,
           type: 'message',
         }),
       );
-      chatService.ws.send(
+      (chatService.ws! as WebSocket).send(
         JSON.stringify({
           content: '0',
           type: 'get old',

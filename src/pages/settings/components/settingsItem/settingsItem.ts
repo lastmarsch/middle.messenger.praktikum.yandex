@@ -13,12 +13,12 @@ export default class SettingsItem extends Input {
   protected render(): string {
     return `
     <div class="${styles.settingsItem}">
-      <div class="${styles.settingsItem__inputGroup}">
-        <label class="${styles.settingsItem__title}">
+      <div class="${(styles as any).settingsItem__inputGroup}">
+        <label class="${(styles as any).settingsItem__title}">
           {{ title }}
         </label>
   
-        <input class="${styles.settingsItem__input}"
+        <input class="${(styles as any).settingsItem__input}"
         {{#if type}}
         type="{{ type }}"
         {{else}}
@@ -44,7 +44,7 @@ export default class SettingsItem extends Input {
       </div>
   
       <!-- Error  -->
-      <span class="${styles.settingsItem__error}">{{ rules }}</span>
+      <span class="${(styles as any).settingsItem__error}">{{ rules }}</span>
     </div>  
     `;
   }

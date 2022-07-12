@@ -5,6 +5,7 @@ import { authService, userService } from '../../services';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
 } from '../../utils';
+import { UserProfileRequestData } from '../../api/types';
 
 class ChangeInfoPage extends Block<IProps> {
   constructor(props: IProps) {
@@ -13,7 +14,7 @@ class ChangeInfoPage extends Block<IProps> {
       const form = e.target as HTMLFormElement;
 
       this.props.validate(form)
-        .then((data) => {
+        .then((data: UserProfileRequestData) => {
           userService.profile(data)
             .then(() => this.props.router.go('/settings'))
             .catch(logError);
@@ -21,8 +22,9 @@ class ChangeInfoPage extends Block<IProps> {
         .catch(logError);
     };
 
-    const onChange = () => {
-      const file = e.target.files[0];
+    const onChange = (e: Event) => {
+      const input = e.target as HTMLInputElement;
+      const file = input!.files![0];
       if (!file) return;
       const data = new FormData();
       data.append('avatar', file);
@@ -74,7 +76,7 @@ class ChangeInfoPage extends Block<IProps> {
         onClick=goToMessenger 
       }}}
       <div class="${styles.mainArea}">
-        <div class="${styles.mainArea__header}">
+        <div class="${(styles as any).mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -82,9 +84,9 @@ class ChangeInfoPage extends Block<IProps> {
             edit=true
             onChange=onChange
           }}}
-          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
+          <span class="${(styles as any).mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <form id="changeInfo" class="${styles.mainArea__list}">
+        <form id="changeInfo" class="${(styles as any).mainArea__list}">
           {{{ SettingsItem 
             id="first_name" 
             name="first_name" 
@@ -160,7 +162,7 @@ class ChangeInfoPage extends Block<IProps> {
         </form>
         {{{ Button 
           form="changeInfo" 
-          class="${styles.mainArea__submit}" 
+          class="${(styles as any).mainArea__submit}" 
           type="submit" 
           innerText="Save changes"
         }}}
@@ -170,4 +172,4 @@ class ChangeInfoPage extends Block<IProps> {
   }
 }
 
-export default withRouter(withValidation(ChangeInfoPage));
+export default withRouter(withValidation(ChangeInfoPage as any) as any);

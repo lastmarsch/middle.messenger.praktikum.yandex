@@ -53,7 +53,7 @@ class ProfilePage extends Block<IProps> {
         onClick=goToMessenger
       }}}
       <div class="${styles.mainArea}">
-        <div class="${styles.mainArea__header}">
+        <div class="${(styles as any).mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -61,9 +61,9 @@ class ProfilePage extends Block<IProps> {
             edit=false
             onClick=changeAvatar
           }}}
-          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
+          <span class="${(styles as any).mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <div class="${styles.mainArea__list}">
+        <div class="${(styles as any).mainArea__list}">
           {{{ SettingsItem title="First name" value=user.first_name readonly="true"}}}
           {{{ SettingsItem title="Second name" value=user.second_name readonly="true"}}}
           {{{ SettingsItem title="Display name" value=user.display_name readonly="true"}}}
@@ -71,7 +71,7 @@ class ProfilePage extends Block<IProps> {
           {{{ SettingsItem title="Email" value=user.email readonly="true"}}}
           {{{ SettingsItem title="Phone" value=user.phone readonly="true"}}}
         </div>
-        <div class="${styles.mainArea__links}">
+        <div class="${(styles as any).mainArea__links}">
           {{{ Link 
             href="/settings-info" 
             text="Change profile data"
@@ -94,4 +94,4 @@ class ProfilePage extends Block<IProps> {
   }
 }
 
-export default withRouter(ProfilePage);
+export default withRouter(ProfilePage as any);
