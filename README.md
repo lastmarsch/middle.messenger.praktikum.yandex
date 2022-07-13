@@ -10,7 +10,8 @@
 Спринт 3: [#3](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/3)
 
 ## Страница проекта
-Проект развернут на хостинге Netlify и доступен по [ссылке](https://stalwart-pegasus-25dff3.netlify.app/).
+
+Docker-сборка проекта развёрнута на хостинге Heroku и доступна по [ссылке] (https://yp-chat-lastmarsch.herokuapp.com/).
 
   
 ## Сборка и запуск
