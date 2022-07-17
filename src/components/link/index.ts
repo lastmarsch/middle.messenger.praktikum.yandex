@@ -1,1 +1,1 @@
-export { Link, LinkProps } from './link';
+export { Link, LinkProps } from '@components/link/link';

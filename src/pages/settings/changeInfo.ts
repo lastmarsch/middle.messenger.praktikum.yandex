@@ -1,11 +1,11 @@
-import { Block, IProps } from '../../core';
-import styles from './settings.module.css';
-import { backPath } from '../../const/images';
-import { authService, userService } from '../../services';
+import { Block, IProps } from '@core';
+import styles from '@pages/settings/settings.module.css';
+import { backPath } from '@const/images';
+import { authService, userService } from '@services';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import { UserProfileRequestData } from '../../api/types';
+} from '@utils';
+import { UserProfileRequestData } from '@api/types';
 
 class ChangeInfoPage extends Block<IProps> {
   constructor(props: IProps) {

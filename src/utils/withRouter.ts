@@ -1,4 +1,4 @@
-import { Block, IProps, Router } from '../core';
+import { Block, IProps, Router } from '@core';
 
 interface WithRouterProps extends IProps {
   router: Router

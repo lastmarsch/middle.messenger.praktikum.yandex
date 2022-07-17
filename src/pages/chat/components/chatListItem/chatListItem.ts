@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../../../core';
-import styles from './chatListItem.module.css';
+import { Block, IProps } from '@core';
+import styles from '@pages/chat/components/chatListItem/chatListItem.module.css';
 
 interface ChatListItemProps extends IProps {
   chatId?: number,

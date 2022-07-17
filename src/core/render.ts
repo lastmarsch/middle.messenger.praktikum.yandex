@@ -1,4 +1,4 @@
-import { Block, IProps } from './Block';
+import { Block, IProps } from '@core/Block';
 
 export default function render(block: Block<IProps>) {
   let root = document.querySelector('#app');

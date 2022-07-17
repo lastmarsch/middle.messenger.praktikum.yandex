@@ -1,10 +1,10 @@
-import chatAPI from '../api/chat';
+import chatAPI from '@api/chat';
 import {
   CreateChatRequestData,
   AddUsersToChatRequestData,
   DeleteUsersFromChatRequestData,
   ChatIdData,
-} from '../api/types';
+} from '@api/types';
 
 const chatService = {
   ws: null,

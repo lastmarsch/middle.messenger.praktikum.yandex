@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../core';
-import styles from './modal.module.css';
+import { Block, IProps } from '@core';
+import styles from '@components/modal/modal.module.css';
 
 export interface ModalProps extends IProps {
   id?: string,

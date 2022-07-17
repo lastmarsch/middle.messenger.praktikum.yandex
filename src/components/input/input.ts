@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../core';
-import styles from './input.module.css';
+import { Block, IProps } from '@core';
+import styles from '@components/input/input.module.css';
 
 export interface InputProps extends IProps {
   title?: string,

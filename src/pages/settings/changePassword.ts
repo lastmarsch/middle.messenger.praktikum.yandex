@@ -1,10 +1,10 @@
-import { Block, IProps } from '../../core';
-import styles from './settings.module.css';
-import { backPath } from '../../const/images';
+import { Block, IProps } from '@core';
+import styles from '@pages/settings/settings.module.css';
+import { backPath } from '@const/images';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import { authService, userService } from '../../services';
+} from '@utils';
+import { authService, userService } from '@services';
 
 class ChangePasswordPage extends Block<IProps> {
   constructor(props: IProps) {

@@ -1,11 +1,11 @@
-import { fetch, METHODS } from '../utils';
+import { fetch, METHODS } from '@utils';
 import {
   GetChatsRequestData,
   CreateChatRequestData,
   ChatIdData,
   AddUsersToChatRequestData,
   DeleteUsersFromChatRequestData,
-} from './types';
+} from '@api/types';
 
 const chatAPI = {
   getChats: (data: GetChatsRequestData) => fetch('chats', {

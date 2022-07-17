@@ -1,6 +1,6 @@
-import apiEndpoint from '../../const/apiEndpoint';
-import { Block, IProps } from '../../core';
-import styles from './avatar.module.css';
+import apiEndpoint from '@const/apiEndpoint';
+import { Block, IProps } from '@core';
+import styles from '@components/avatar/avatar.module.css';
 
 export interface AvatarProps extends IProps {
   id?: string,

@@ -1,24 +1,29 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const webpack = require('webpack');
-
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
   entry: "./src/index.ts",
   resolve: {
     extensions: [".ts", ".js", ".css", ".svg", ".json"],
     alias: {
-      'handlebars' : 'handlebars/dist/handlebars.js',
-      process: "process/browser"
-    }
+      handlebars: "handlebars/dist/handlebars.js",
+      "@api": path.join(__dirname, "src/api/"),
+      "@components": path.join(__dirname, "src/components/"),
+      "@const": path.join(__dirname, "src/const/"),
+      "@core": path.join(__dirname, "src/core/"),
+      "@pages": path.join(__dirname, "src/pages/"),
+      "@services": path.join(__dirname, "src/services/"),
+      "@test": path.join(__dirname, "src/test/"),
+      "@utils": path.join(__dirname, "src/utils/"),
+      "@static": path.join(__dirname, "static/"),
+    },
   },
   module: {
     rules: [
       {
         test: function (modulePath) {
-          return modulePath.endsWith('.ts') && !modulePath.endsWith('.spec.ts');
+          return modulePath.endsWith(".ts") && !modulePath.endsWith(".spec.ts");
         },
         include: [path.resolve(__dirname, "src")],
         use: [
@@ -33,37 +38,13 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        type: 'asset',
-      },
-      {
-        test: /\.css$/i,
-        use: [
-          {
-            loader:
-              process.env.NODE_ENV === "development"
-                ? "style-loader"
-                : MiniCssExtractPlugin.loader,
-          },
-          "@teamsupercell/typings-for-css-modules-loader",
-          {
-            loader: "css-loader",
-            options: { modules: true },
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                config: path.resolve(__dirname, ".postcssrc"),
-              },
-            },
-          },
-        ],
+        type: "asset",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      baseUrl: '/',
+      baseUrl: "/",
       template: "src/index.html",
       templateParameters(compilation, assets, options) {
         return {
@@ -75,19 +56,13 @@ module.exports = {
             options,
           },
           process,
-        }
+        };
       },
-      chunksSortMode: 'auto',
+      chunksSortMode: "auto",
       minify: {
         collapseWhitespace: false,
       },
       cache: true,
-    }),
-    new MiniCssExtractPlugin({
-      filename: "style.css",
-    }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser',
     }),
   ],
   output: {
@@ -95,14 +70,5 @@ module.exports = {
     filename: "bundle.js",
     clean: true,
     publicPath: "/",
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
-    port: 3000,
-    hot: true,
-    historyApiFallback: {
-      index: "index.html",
-    },
   },
 };

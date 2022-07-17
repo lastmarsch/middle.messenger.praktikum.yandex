@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import mockDocument from '../test';
-import { Block, IProps } from './Block';
+import mockDocument from '@test';
+import { Block, IProps } from '@core/Block';
 
 mockDocument();
 

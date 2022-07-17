@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
-import EventBus from './EventBus';
+import EventBus from '@core/EventBus';
 
 export interface IProps {
   tagName ?: string,

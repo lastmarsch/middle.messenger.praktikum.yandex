@@ -1,10 +1,10 @@
-import { SignUpRequestData } from '../../api/types';
-import { Block, IProps } from '../../core';
-import { authService } from '../../services';
+import { SignUpRequestData } from '@api/types';
+import { Block, IProps } from '@core';
+import { authService } from '@services';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import styles from './auth.module.css';
+} from '@utils';
+import styles from '@pages/auth/auth.module.css';
 
 class SignUpPage extends Block<IProps> {
   constructor(props: IProps) {

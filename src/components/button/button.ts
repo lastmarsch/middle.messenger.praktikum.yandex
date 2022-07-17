@@ -1,4 +1,4 @@
-import { Block, IProps } from '../../core';
+import { Block, IProps } from '@core';
 // import styles from './button.module.css';
 
 export interface ButtonProps extends IProps {

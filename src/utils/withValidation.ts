@@ -1,5 +1,5 @@
-import { Input } from '../components';
-import { Block, IProps } from '../core';
+import { Input } from '@components';
+import { Block, IProps } from '@core';
 
 interface WithValidationProps extends IProps {
   validateInput: (...args: any[]) => void,

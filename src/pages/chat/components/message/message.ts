@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../../../core';
-import styles from './message.module.css';
+import { Block, IProps } from '@core';
+import styles from '@pages/chat/components/message/message.module.css';
 
 interface MessageProps extends IProps {
   isAuthor?: boolean,

@@ -5,7 +5,7 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
-type Data = { [key: string]: number | string | object };
+type Data = Record<string, number | string | object>;
 
 function queryStringify(data?: Data) {
   let query = '';

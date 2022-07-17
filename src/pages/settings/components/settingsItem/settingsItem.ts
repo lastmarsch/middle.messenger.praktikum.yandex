@@ -1,5 +1,5 @@
-import { Input, InputProps } from '../../../../components/input';
-import styles from './settingsItem.module.css';
+import { Input, InputProps } from '@components/input';
+import styles from '@pages/settings/components/settingsItem/settingsItem.module.css';
 
 export default class SettingsItem extends Input {
   public static componentName = 'SettingsItem';

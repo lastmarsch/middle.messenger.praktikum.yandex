@@ -1,5 +1,5 @@
-import { IProps } from '../Block';
-import Route from './Route';
+import { IProps } from '@core/Block';
+import Route from '@core/router/Route';
 
 export default class Router {
   private static __instance: Router;

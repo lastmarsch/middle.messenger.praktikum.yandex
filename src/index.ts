@@ -1,18 +1,18 @@
 // components
 import {
   Button, Input, Link, Avatar, Modal, ContextMenu,
-} from './components';
-import ChatListItem from './pages/chat/components/chatListItem';
-import Message from './pages/chat/components/message';
-import SettingsItem from './pages/settings/components/settingsItem';
+} from '@components';
+import ChatListItem from '@pages/chat/components/chatListItem';
+import Message from '@pages/chat/components/message';
+import SettingsItem from '@pages/settings/components/settingsItem';
 
-import { registerComponent, Router } from './core';
+import { registerComponent, Router } from '@core';
 
 // pages
-import { SignInPage, SignUpPage } from './pages/auth';
-import { ChangeInfoPage, ChangePasswordPage, ProfilePage } from './pages/settings';
-import ChatPage from './pages/chat';
-import { Page404, Page500 } from './pages/error';
+import { SignInPage, SignUpPage } from '@pages/auth';
+import { ChangeInfoPage, ChangePasswordPage, ProfilePage } from '@pages/settings';
+import ChatPage from '@pages/chat';
+import { Page404, Page500 } from '@pages/error';
 
 [Button,
   Input,

@@ -1,12 +1,12 @@
-import { Block, IProps } from '../../core';
-import styles from './chat.module.css';
+import { Block, IProps } from '@core';
+import styles from '@pages/chat/chat.module.css';
 import {
   settingsPath, plusPath, morePath, paperclipPath, sendPath,
-} from '../../const/images';
+} from '@const/images';
 import {
   formatDateTime, logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import { authService, chatService } from '../../services';
+} from '@utils';
+import { authService, chatService } from '@services';
 
 class ChatPage extends Block<IProps> {
   constructor(props: IProps) {

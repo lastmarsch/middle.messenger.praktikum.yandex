@@ -1,6 +1,6 @@
-import { Block, IProps } from '../../core';
-import { withRouter } from '../../utils';
-import styles from './error.module.css';
+import { Block, IProps } from '@core';
+import { withRouter } from '@utils';
+import styles from '@pages/error/error.module.css';
 
 export interface ErrorProps extends IProps {
   code?: string,

@@ -1,3 +1,3 @@
-import mockDocument from './mockDocument';
+import mockDocument from '@test/mockDocument';
 
 export default mockDocument;

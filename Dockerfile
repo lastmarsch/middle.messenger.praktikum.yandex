@@ -1,9 +1,11 @@
-FROM ubuntu:latest
-RUN apt update && apt install -y nodejs && apt install -y npm 
+FROM node:latest
 
 WORKDIR /var/www
-COPY . .
+COPY package*.json ./
 
+RUN npm i
+
+COPY . .
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
