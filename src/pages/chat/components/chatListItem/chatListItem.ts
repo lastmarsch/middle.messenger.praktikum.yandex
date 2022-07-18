@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../../../core';
-import styles from './chatListItem.module.css';
+import { Block, IProps } from '@core';
+import styles from '@pages/chat/components/chatListItem/chatListItem.module.css';
 
 interface ChatListItemProps extends IProps {
   chatId?: number,
@@ -37,19 +37,19 @@ export default class ChatListItem extends Block<IProps> {
           {{/if}}
       "
     >
-      <div class="${styles.chatItem__icon}"></div>
-      <div class="${styles.chatItem__textGroup}">
-        <span class="${styles.textGroup__username}">{{ username }}</span>
-        <span class="${styles.textGroup__lastMsg}">{{ lastMessage }}</span>
+      <div class="${(styles as any).chatItem__icon}"></div>
+      <div class="${(styles as any).chatItem__textGroup}">
+        <span class="${(styles as any).textGroup__username}">{{ username }}</span>
+        <span class="${(styles as any).textGroup__lastMsg}">{{ lastMessage }}</span>
       </div>
-      <div class="${styles.chatItem__msgInfoGroup}">
+      <div class="${(styles as any).chatItem__msgInfoGroup}">
         <span
-          class="${styles.msgInfoGroup__lastOnline}"
+          class="${(styles as any).msgInfoGroup__lastOnline}"
           >{{ lastOnline }}</span
         >`;
 
     buffHtml += (this.props.unreadMessagesCount)
-      ? `<span class="${styles.msgInfoGroup__unreadMsg}">{{ unreadMessagesCount }}</span>`
+      ? `<span class="${(styles as any).msgInfoGroup__unreadMsg}">{{ unreadMessagesCount }}</span>`
       : '';
     buffHtml += `</div>
             </div>`;

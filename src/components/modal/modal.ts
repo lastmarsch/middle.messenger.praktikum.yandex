@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../core';
-import styles from './modal.module.css';
+import { Block, IProps } from '@core';
+import styles from '@components/modal/modal.module.css';
 
 export interface ModalProps extends IProps {
   id?: string,
@@ -23,7 +23,7 @@ export class Modal extends Block<ModalProps> {
       toggleModal,
       events: {
         click: (e) => {
-          if (!e.target.closest(`.${styles.modal__body}`)) { this.props.toggleModal(); }
+          if (!e.target.closest(`.${(styles as any).modal__body}`)) { this.props.toggleModal(); }
         },
         submit: (e) => {
           e.preventDefault();
@@ -42,9 +42,9 @@ export class Modal extends Block<ModalProps> {
   protected render(): string {
     return `  
     <div class="${styles.modal} ${this.props.closed ? styles.hidden : ''}">
-      <div class="${styles.modal__body}">
-        <span class="${styles.modal__title}">{{ title }}</span>
-        <form id="{{ formId }}" class="${styles.modal__form}">
+      <div class="${(styles as any).modal__body}">
+        <span class="${(styles as any).modal__title}">{{ title }}</span>
+        <form id="{{ formId }}" class="${(styles as any).modal__form}">
           ${this.props.yield}
         </form>        
       </div>

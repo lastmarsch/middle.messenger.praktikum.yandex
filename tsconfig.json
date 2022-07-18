@@ -1,21 +1,53 @@
 {
   "compilerOptions": {
-    "target": "es2021",                                  
-    "module": "commonjs",                                
-    "rootDir": "./src",                                  
-    "resolveJsonModule": true,                           
-    "sourceMap": true,                                   
-    "outDir": "dist",                                    
-    "esModuleInterop": true,                             
-    "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                     
-    "noImplicitAny": true,                               
-    "strictNullChecks": true,                            
-    "noUnusedLocals": true,                              
-    "noUnusedParameters": true,                          
-    "skipLibCheck": true,                                
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "target": "ES2022",
+    "module": "ES2022",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@const/*": ["src/const/*"],
+      "@core": ["src/core"],
+      "@core/*": ["src/core/*"],
+      "@pages/*": ["src/pages/*"],
+      "@services": ["src/services"],
+      "@services/*": ["src/services/*"],
+      "@test": ["src/test"],
+      "@test/*": ["src/test/*"],
+      "@utils": ["src/utils"],
+      "@utils/*": ["src/utils/*"],
+      "@static/*": ["static/*"],
+    },
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "src/typings"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

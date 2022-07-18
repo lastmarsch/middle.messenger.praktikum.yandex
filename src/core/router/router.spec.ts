@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { expect } from 'chai';
-import { mockDocument } from '../../utils';
-import { Block, IProps } from '../Block';
-import Router from './Router';
+import mockDocument from '@test';
+import { Block, IProps } from '@core/Block';
+import Router from '@core/router';
 
 mockDocument();
 

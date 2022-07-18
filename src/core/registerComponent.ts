@@ -1,5 +1,5 @@
 import Handlebars, { HelperOptions } from 'handlebars';
-import { Block, IProps } from './Block';
+import { Block, IProps } from '@core/Block';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface BlockConstructable<Props = any> {

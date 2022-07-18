@@ -1,4 +1,4 @@
-import { Block, IProps } from '../../core';
+import { Block, IProps } from '@core';
 // import styles from './link.module.css';
 
 export interface LinkProps extends IProps {

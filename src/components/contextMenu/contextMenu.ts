@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../core';
-import styles from './contextMenu.module.css';
+import { Block, IProps } from '@core';
+import styles from '@components/contextMenu/contextMenu.module.css';
 
 interface ContextMenuProps extends IProps {
   id?: string,

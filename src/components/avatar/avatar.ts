@@ -1,5 +1,6 @@
-import { Block, IProps } from '../../core';
-import styles from './avatar.module.css';
+import apiEndpoint from '@const/apiEndpoint';
+import { Block, IProps } from '@core';
+import styles from '@components/avatar/avatar.module.css';
 
 export interface AvatarProps extends IProps {
   id?: string,
@@ -15,7 +16,7 @@ export class Avatar extends Block<AvatarProps> {
   constructor({ onChange, ...props }: AvatarProps) {
     super({
       ...props,
-      avatar: props.avatar ? `${process.env.API_ENDPOINT}/resources${props.avatar}` : undefined,
+      avatar: props.avatar ? `${apiEndpoint}/resources${props.avatar}` : undefined,
       events: {
         change: onChange!,
       },

@@ -1,10 +1,10 @@
-import { Block, IProps } from '../../core';
-import styles from './settings.module.css';
-import { backPath } from '../../const/images';
+import { Block, IProps } from '@core';
+import styles from '@pages/settings/settings.module.css';
+import { backPath } from '@const/images';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import { authService, userService } from '../../services';
+} from '@utils';
+import { authService, userService } from '@services';
 
 class ChangePasswordPage extends Block<IProps> {
   constructor(props: IProps) {
@@ -13,7 +13,7 @@ class ChangePasswordPage extends Block<IProps> {
       const form = e.target as HTMLFormElement;
 
       this.props.validate(form)
-        .then((data) => {
+        .then((data: { new_password: string; confirm_password: any; old_password: string; }) => {
           const passwordsMatch = data.new_password === data.confirm_password;
           if (!passwordsMatch) {
           // show error
@@ -56,7 +56,7 @@ class ChangePasswordPage extends Block<IProps> {
       .then((user) => {
         this.setProps({ user });
       })
-      .catch((e) => this.props.router.go('/'));
+      .catch(() => this.props.router.go('/'));
   }
 
   show(): void {
@@ -64,7 +64,7 @@ class ChangePasswordPage extends Block<IProps> {
       .then((user) => {
         this.setProps({ user });
       })
-      .catch((e) => this.props.router.go('/'));
+      .catch(() => this.props.router.go('/'));
 
     super.show();
   }
@@ -79,7 +79,7 @@ class ChangePasswordPage extends Block<IProps> {
         onClick=goToMessenger
       }}}
       <div class="${styles.mainArea}">
-        <div class="${styles.mainArea__header}">
+        <div class="${(styles as any).mainArea__header}">
           {{{ Avatar
             id="avatar"
             name="avatar"
@@ -87,9 +87,9 @@ class ChangePasswordPage extends Block<IProps> {
             edit=true
             onClick=changeAvatar
           }}}
-          <span class="${styles.mainArea__username}">{{ user.display_name }}</span>
+          <span class="${(styles as any).mainArea__username}">{{ user.display_name }}</span>
         </div>
-        <form id="changePassword" class="${styles.mainArea__list}">
+        <form id="changePassword" class="${(styles as any).mainArea__list}">
           {{{ SettingsItem 
             id="old_password" 
             name="old_password" 
@@ -126,7 +126,7 @@ class ChangePasswordPage extends Block<IProps> {
         </form>
         {{{ Button 
           form="changePassword" 
-          class="${styles.mainArea__submit}" 
+          class="${(styles as any).mainArea__submit}" 
           type="submit" 
           innerText="Save changes"
         }}}
@@ -136,4 +136,4 @@ class ChangePasswordPage extends Block<IProps> {
   }
 }
 
-export default withRouter(withValidation(ChangePasswordPage));
+export default withRouter(withValidation(ChangePasswordPage as any) as any);

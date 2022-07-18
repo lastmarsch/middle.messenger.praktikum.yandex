@@ -1,7 +1,7 @@
-import authAPI from './auth';
-import chatAPI from './chat';
-import userAPI from './user';
-import * as requestTypes from './types';
+import authAPI from '@api/auth';
+import chatAPI from '@api/chat';
+import userAPI from '@api/user';
+import * as requestTypes from '@api/types';
 
 export default {
   authAPI, userAPI, chatAPI, requestTypes,

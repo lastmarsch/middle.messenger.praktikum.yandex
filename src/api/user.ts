@@ -1,9 +1,9 @@
-import { fetch, METHODS } from '../utils';
+import { fetch, METHODS } from '@utils';
 import {
   UserProfileRequestData,
   PasswordRequestData,
   UserSearchRequestData,
-} from './types';
+} from '@api/types';
 
 const userAPI = {
   profile: (data: UserProfileRequestData) => fetch('user/profile', {

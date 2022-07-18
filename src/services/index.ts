@@ -1,6 +1,6 @@
-import authService from './authService';
-import chatService from './chatService';
-import userService from './userService';
+import authService from '@services/authService';
+import chatService from '@services/chatService';
+import userService from '@services/userService';
 
 export {
   authService, chatService, userService,

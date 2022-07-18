@@ -1,5 +1,5 @@
-import { fetch, METHODS } from '../utils';
-import { SignUpRequestData, SignInRequestData } from './types';
+import { fetch, METHODS } from '@utils';
+import { SignUpRequestData, SignInRequestData } from '@api/types';
 
 const authAPI = {
   signup: (data: SignUpRequestData) => fetch('auth/signup', {

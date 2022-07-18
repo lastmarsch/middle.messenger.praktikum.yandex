@@ -1,8 +1,8 @@
-import userAPI from '../api/user';
+import userAPI from '@api/user';
 import {
   UserProfileRequestData,
   PasswordRequestData,
-} from '../api/types';
+} from '@api/types';
 
 const userService = {
   profile: (data: UserProfileRequestData) => userAPI.profile(data)

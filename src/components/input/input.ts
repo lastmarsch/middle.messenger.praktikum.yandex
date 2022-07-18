@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../core';
-import styles from './input.module.css';
+import { Block, IProps } from '@core';
+import styles from '@components/input/input.module.css';
 
 export interface InputProps extends IProps {
   title?: string,
@@ -59,7 +59,7 @@ export class Input extends Block<InputProps> {
     return `
     <div class="${styles.inputGroup}">
       {{#if title}}
-      <label for="{{ id }}" class="${styles.inputGroup__label}">
+      <label for="{{ id }}" class="${(styles as any).inputGroup__label}">
         {{ title }}
       </label>
       {{/if}}
@@ -73,7 +73,7 @@ export class Input extends Block<InputProps> {
         id="{{ id }}"
         {{/if}}
 
-        class="${styles.inputGroup__input}"
+        class="${(styles as any).inputGroup__input}"
 
         {{#if value}}
         value="{{ value }}"
@@ -89,7 +89,7 @@ export class Input extends Block<InputProps> {
       >
 
       <!-- Error  -->
-      <span class="${styles.inputGroup__error}">{{ rules }}</span>
+      <span class="${(styles as any).inputGroup__error}">{{ rules }}</span>
     </div>
     `;
   }

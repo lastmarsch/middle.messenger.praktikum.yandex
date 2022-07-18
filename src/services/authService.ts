@@ -1,5 +1,5 @@
-import authAPI from '../api/auth';
-import { SignUpRequestData, SignInRequestData } from '../api/types';
+import authAPI from '@api/auth';
+import { SignUpRequestData, SignInRequestData } from '@api/types';
 
 const authService = {
   signIn: (data: SignInRequestData) => authAPI.signin(data)

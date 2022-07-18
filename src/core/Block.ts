@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
-import EventBus from './EventBus';
+import EventBus from '@core/EventBus';
 
 export interface IProps {
   tagName ?: string,
@@ -20,7 +20,7 @@ export class Block<Props extends IProps> {
 
   public id = nanoid(8);
 
-  protected _element!: HTMLElement;
+  public _element!: HTMLElement;
 
   private _eventBus: () => EventBus;
 

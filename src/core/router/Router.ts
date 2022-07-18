@@ -1,5 +1,5 @@
-import { Block, IProps } from '../Block';
-import Route from './Route';
+import { IProps } from '@core/Block';
+import Route from '@core/router/Route';
 
 export default class Router {
   private static __instance: Router;
@@ -21,7 +21,7 @@ export default class Router {
 
   // use — регистрирует блок по пути в роут и возвращает себя —
   // чтобы можно было выстроить в цепочку;
-  use(pathname: string, blockClass: typeof Block<IProps>, props: IProps) {
+  use(pathname: string, blockClass: any, props: IProps) {
     const route = new Route(pathname, blockClass, props);
     this.routes.push(route);
     return this;

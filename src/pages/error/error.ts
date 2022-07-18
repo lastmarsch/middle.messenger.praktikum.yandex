@@ -1,8 +1,8 @@
-import { Block, IProps } from '../../core';
-import { withRouter } from '../../utils';
-import styles from './error.module.css';
+import { Block, IProps } from '@core';
+import { withRouter } from '@utils';
+import styles from '@pages/error/error.module.css';
 
-interface ErrorProps extends IProps {
+export interface ErrorProps extends IProps {
   code?: string,
   text?: string,
 }
@@ -19,14 +19,14 @@ class ErrorPage extends Block<IProps> {
     return `
     <div class="${styles.appContainer}">
       <div class="${styles.error}">
-        <span class="${styles.error__title}">
+        <span class="${(styles as any).error__title}">
           ${this.props.code}
           <br>
           ${this.props.text}
         </span>
         {{{ Link 
           href="" 
-          class="${styles.error__link}" 
+          class="${(styles as any).error__link}" 
           text="Back to chats" 
           onClick=goToMessenger
         }}}
@@ -35,4 +35,4 @@ class ErrorPage extends Block<IProps> {
   }
 }
 
-export default withRouter(ErrorPage);
+export default withRouter(ErrorPage as any);

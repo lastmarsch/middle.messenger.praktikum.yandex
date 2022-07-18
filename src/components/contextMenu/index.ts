@@ -1,3 +1,3 @@
-import ContextMenu from './contextMenu';
+import ContextMenu from '@components/contextMenu/contextMenu';
 
 export default ContextMenu;

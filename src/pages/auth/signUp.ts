@@ -1,9 +1,10 @@
-import { Block, IProps } from '../../core';
-import { authService } from '../../services';
+import { SignUpRequestData } from '@api/types';
+import { Block, IProps } from '@core';
+import { authService } from '@services';
 import {
   logError, VALIDATION_RULES, withRouter, withValidation,
-} from '../../utils';
-import styles from './auth.module.css';
+} from '@utils';
+import styles from '@pages/auth/auth.module.css';
 
 class SignUpPage extends Block<IProps> {
   constructor(props: IProps) {
@@ -12,7 +13,7 @@ class SignUpPage extends Block<IProps> {
       const form = e.target as HTMLFormElement;
 
       this.props.validate(form)
-        .then((data) => {
+        .then((data: SignUpRequestData) => {
           authService.signUp(data)
             .then(() => this.props.router.go('/messenger'))
             .catch(logError);
@@ -45,10 +46,10 @@ class SignUpPage extends Block<IProps> {
     return `
     <div class="${styles.appContainer}">
       <div class="${styles.container}">
-        <span class="${styles.container__title}">
+        <span class="${(styles as any).container__title}">
           Sign up
         </span>
-        <form id="signup" action="" class="${styles.container__form}">
+        <form id="signup" action="" class="${(styles as any).container__form}">
           {{{ Input 
             id="first_name" 
             name="first_name" 
@@ -116,16 +117,16 @@ class SignUpPage extends Block<IProps> {
           }}}
         </form>
 
-        <div class="${styles.container__form}">
+        <div class="${(styles as any).container__form}">
           {{{ Button 
             form="signup" 
             type="submit" 
-            class="${styles.container__button}" 
+            class="${(styles as any).container__button}" 
             innerText="Sign up"
           }}}
           {{{ Link 
             href="/" 
-            class="${styles.container__link}" 
+            class="${(styles as any).container__link}" 
             text="Sign in" 
             onClick=goToSignIn
           }}}
@@ -136,4 +137,4 @@ class SignUpPage extends Block<IProps> {
   }
 }
 
-export default withRouter(withValidation(SignUpPage));
+export default withRouter(withValidation(SignUpPage as any) as any);

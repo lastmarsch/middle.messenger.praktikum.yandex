@@ -1,5 +1,5 @@
-import { Block, IProps } from '../../../../core';
-import styles from './message.module.css';
+import { Block, IProps } from '@core';
+import styles from '@pages/chat/components/message/message.module.css';
 
 interface MessageProps extends IProps {
   isAuthor?: boolean,
@@ -19,11 +19,11 @@ export default class Message extends Block<IProps> {
       <div class="${styles.message}`;
     buffHtml += (!this.props.isAuthor) ? ` ${styles.leftAlign}` : '';
     buffHtml += `">
-      <div class="${styles.message__container}">
-        <span class="${styles.message__text}">
+      <div class="${(styles as any).message__container}">
+        <span class="${(styles as any).message__text}">
           {{ text }}
         </span>
-        <time class="${styles.message__time}">
+        <time class="${(styles as any).message__time}">
           {{ time }}
         </time>
       </div>
