@@ -1,28 +1,26 @@
 
-# Модуль 1. Веб-приложение "Чат"
-Проектная работа первого модуля курса Мидл фронтенд-разработчик. 
+# Messenger
+Project work for the first module of the Middle Frontend Developer course by Yandex. 
 
-## Пулл реквесты
-Спринт 1: [#1](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/1)
+## Project page
+The Docker build of the project is deployed on [Heroku](https://yp-chat-lastmarsch.herokuapp.com/).
 
-Спринт 2: [#2](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/2)
-
-Спринт 3: [#3](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/3)
-
-Спринт 4: [#4](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/4)
-
-## Страница проекта
-
-Docker-сборка проекта развёрнута на хостинге Heroku и доступна по [ссылке](https://yp-chat-lastmarsch.herokuapp.com/).
-
+## Mockup
+The application mockup are available at [Figma](https://www.figma.com/file/eHfq7ZtG4fSTdFIG8UYS3x/Messenger?node-id=0:1).
   
-## Сборка и запуск
-### Собрать проект
+## Build and run
+### Build project
     npm run build
-### Запустить проект на 3000 порту
+### Run the project on port 3000
     npm run start
-### Запустить тесты
+### Run tests
     npm run test
+    
+## Pull requests
+Sprint 1: [#1](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/1)
 
-## Макет приложения
-Макет приложения в Figma доступен по [ссылке](https://www.figma.com/file/eHfq7ZtG4fSTdFIG8UYS3x/Messenger?node-id=0:1).
+Sprint 2: [#2](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/2)
+
+Sprint 3: [#3](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/3)
+
+Sprint 4: [#4](https://github.com/lastmarsch/middle.messenger.praktikum.yandex/pull/4)
