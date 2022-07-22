@@ -1,6 +1,6 @@
 
 # Messenger
-Project work for the first module of the Middle Frontend Developer course by Yandex. 
+Course project on the Middle Frontend Developer course by Yandex. 
 
 ## Project page
 The Docker build of the project is deployed on [Heroku](https://yp-chat-lastmarsch.herokuapp.com/).
